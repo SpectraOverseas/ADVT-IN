@@ -13,9 +13,9 @@ dashboards.
    ```
 2. Run the preprocessing script against your workbook:
    ```bash
-   python tools/preprocess_workbook.py "Products Search Term.xlsx"
+   python tools/preprocess_workbook.py "Products Campaign.xlsx"
    ```
-   The command creates `preprocessed/Products Search Term.json` by default.
+   The command creates `preprocessed/Products Campaign.json` by default.
 3. Copy the generated JSON next to `index.html` (or serve it from the same
    directory). On the next load the UI will automatically pick up the JSON file
    before falling back to the XLSX workbook.
@@ -30,7 +30,7 @@ When the workbook contains tens of thousands of rows you can generate
 filter-aware data slices that the static site can load on demand:
 
 ```bash
-python tools/preprocess_dashboard.py "Products Search Term.xlsx" \
+python tools/preprocess_dashboard.py "Products Campaign.xlsx" \
   --out data --filters date store category targetingType asin \
   --partition date:month store
 ```

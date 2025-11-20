@@ -78,16 +78,36 @@ def normalize(value: object) -> str:
 
 def find_index(headers: Sequence[str], tokens: Iterable[str]) -> int:
     normalized_headers = [normalize(h) for h in headers]
-    token_list = [normalize(t) for t in tokens]
+    token_list = []
+    for token in tokens:
+        norm_token = normalize(token)
+        if norm_token:
+            token_list.append(norm_token)
+    if not token_list:
+        return -1
     for token in token_list:
         try:
             return normalized_headers.index(token)
         except ValueError:
             continue
+    best_idx = -1
+    best_score = 0.0
     for idx, header in enumerate(normalized_headers):
-        if any(token and token in header for token in token_list):
-            return idx
-    return -1
+        if not header:
+            continue
+        for token in token_list:
+            pos = header.find(token)
+            if pos == -1:
+                continue
+            score = len(token) / max(len(header), 1)
+            if pos == 0:
+                score += 0.15
+            if pos + len(token) == len(header):
+                score += 0.35
+            if score > best_score:
+                best_score = score
+                best_idx = idx
+    return best_idx if best_score > 0 else -1
 
 
 def score_headers(headers: Sequence[str]) -> int:

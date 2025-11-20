@@ -53,10 +53,15 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;border-color:var(--btnText);color:var(--btnText)}
 /* icon-only theme button */
 .btn-mode{display:inline-flex;align-items:center;gap:0;border-radius:14px;padding:10px;border:1px solid var(--modeBtnBg);background:var(--modeBtnBg);color:var(--modeIcon);width:42px;justify-content:center}
+.btn-icon{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;padding:10px;border-radius:12px;border:1px solid var(--border-strong);background:color-mix(in srgb,var(--panel) 85%, var(--chip));color:var(--muted);transition:background .2s ease,color .2s ease,transform .12s ease,box-shadow .25s ease}
+.btn-icon:hover{background:color-mix(in srgb,var(--chip) 92%, var(--panel));color:var(--text);transform:translateY(-1px);box-shadow:0 8px 18px rgba(15,23,42,.22)}
+.btn-icon:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
 /* Header */
 .app-header{display:grid;grid-template-columns:auto minmax(260px,1fr) auto;align-items:center;gap:clamp(12px,2vw,24px);padding:12px clamp(14px,3vw,28px);border-bottom:1px solid var(--border);background:var(--header-grad);position:sticky;top:0;backdrop-filter:blur(6px);z-index:20}
+.header-left{display:flex;align-items:center;gap:14px;min-width:0}
 .header-title{display:flex;align-items:center;gap:10px;min-width:0}
+.header-title h1{font-size:clamp(20px,4vw,26px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 .header-search{display:flex;justify-content:center;min-width:0}
 .header-filter{grid-template-columns:1fr;min-width:0;width:min(420px,100%)}
@@ -87,8 +92,42 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .dd-search-mode .dd-item.is-selected .dd-text::after{content:none}
 .dd-search-mode .dd-count{color:var(--muted);font-size:12px}
 .dd-search-mode .dd-empty{padding:18px 12px;font-weight:600;color:var(--muted)}
+.dataset-menu{position:relative;display:inline-flex;align-items:center}
+.dataset-menu-trigger{position:relative;display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;padding:0;border-radius:14px;border:0;background:transparent;color:var(--muted);cursor:pointer;transition:background .25s ease,color .2s ease,transform .12s ease,box-shadow .25s ease}
+.dataset-menu-trigger::after{content:"";position:absolute;inset:4px;border-radius:12px;opacity:0;background:color-mix(in srgb,var(--panel) 75%, transparent);transition:opacity .2s ease,background .25s ease;pointer-events:none}
+.dataset-menu-trigger:hover{color:var(--text);transform:translateY(-1px)}
+.dataset-menu-trigger:hover::after{opacity:1}
+.dataset-menu-trigger:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.dataset-menu-icon{position:relative;display:inline-block;width:26px;height:18px}
+.dataset-menu-icon::after{content:"";position:absolute;top:50%;right:2px;width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translate(4px,-50%) rotate(-45deg) scale(.75);opacity:0;transition:opacity .25s ease,transform .32s ease}
+.dataset-menu-line{position:absolute;left:50%;width:100%;height:2px;background:currentColor;border-radius:999px;transition:transform .32s ease,opacity .2s ease,background .2s ease,top .32s ease,bottom .32s ease,width .32s ease;transform:translate(-50%,0);transform-origin:center}
+.dataset-menu-line.top{top:0}
+.dataset-menu-line.middle{top:50%;transform:translate(-50%,-50%)}
+.dataset-menu-line.bottom{bottom:0}
+.dataset-menu.is-open .dataset-menu-trigger{color:var(--accent);box-shadow:0 14px 30px rgba(37,99,235,.18);transform:none}
+.dataset-menu.is-open .dataset-menu-trigger::after{opacity:1;background:color-mix(in srgb,var(--accent) 18%, var(--panel))}
+.dataset-menu.is-open .dataset-menu-icon::after{opacity:1;transform:translate(4px,-50%) rotate(-45deg) scale(1)}
+.dataset-menu.is-open .dataset-menu-line{width:60%}
+.dataset-menu.is-open .dataset-menu-line.top{top:50%;transform:translate(-50%,-50%) rotate(45deg)}
+.dataset-menu.is-open .dataset-menu-line.middle{transform:translate(-50%,-50%);opacity:.65}
+.dataset-menu.is-open .dataset-menu-line.bottom{bottom:auto;top:50%;transform:translate(-50%,-50%) rotate(-45deg)}
+.dataset-menu-popup{position:absolute;top:calc(100% + 8px);right:0;min-width:220px;max-width:280px;padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--panel);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;z-index:130}
+.dataset-menu-popup[hidden]{display:none}
+.dataset-menu-head{display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:800;color:var(--text)}
+.dataset-menu-current{font-size:12px;font-weight:600;color:var(--muted)}
+.dataset-menu-list{display:flex;flex-direction:column;gap:6px}
+.dataset-menu-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 10px;border-radius:10px;border:1px solid transparent;background:color-mix(in srgb,var(--panel) 92%, transparent);color:var(--text);font-weight:600;cursor:pointer;transition:background .2s ease,transform .12s ease,border-color .2s ease,box-shadow .25s ease}
+.dataset-menu-name{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dataset-menu-item:hover{background:color-mix(in srgb,var(--chip) 90%, var(--panel));transform:translateY(-1px);box-shadow:0 8px 20px rgba(15,23,42,.22)}
+.dataset-menu-item:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.dataset-menu-item .dataset-menu-meta{font-size:12px;font-weight:600;color:var(--muted)}
+.dataset-menu-item .dataset-menu-check{opacity:0;color:var(--accent);font-size:14px}
+.dataset-menu-item.is-active{border-color:color-mix(in srgb,var(--accent) 55%, var(--border));background:color-mix(in srgb,var(--accent) 18%, var(--panel));box-shadow:0 12px 28px rgba(37,99,235,.22)}
+.dataset-menu-item.is-active .dataset-menu-check{opacity:1}
+.dataset-menu-empty{padding:6px 0;font-weight:600;color:var(--muted);text-align:center}
 @media(max-width:900px){
   .app-header{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .header-left{justify-content:center}
   .header-title{justify-content:center}
   .actions{justify-content:center}
   .header-search{width:100%}
@@ -98,9 +137,18 @@ body:not(.has-data) .app-header{display:none}
 /* Layout */
 #contentWrap{flex:1;display:flex;flex-direction:column;gap:14px;padding:12px clamp(14px,3vw,28px) 28px}
 body:not(.has-data) #contentWrap{justify-content:center;padding:0 18px}
-.empty-state{display:none;text-align:center;font-weight:600;color:var(--muted);line-height:1.6;max-width:520px;margin:0 auto;font-size:15px}
-.empty-state span{color:var(--accent);cursor:pointer;text-decoration:underline;font-weight:700}
-.empty-state span:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
+.empty-state{display:none;flex-direction:column;align-items:center;gap:18px;text-align:center;font-weight:600;color:var(--muted);line-height:1.6;max-width:520px;margin:0 auto;padding:0 18px;font-size:15px}
+.empty-state-lede{font-size:16px;color:var(--text);font-weight:800}
+.empty-state-actions{display:flex;flex-direction:column;align-items:center;gap:18px;width:100%}
+.empty-dataset-options{display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px}
+.empty-dataset-btn{width:100%;text-align:left;border:1px solid var(--border-strong);background:color-mix(in srgb,var(--panel) 85%, var(--chip));color:var(--text);border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer;box-shadow:var(--shadow);transition:background .2s ease,color .2s ease,transform .12s ease,box-shadow .25s ease}
+.empty-dataset-btn:hover{background:color-mix(in srgb,var(--chip) 90%, var(--panel));transform:translateY(-1px);box-shadow:0 10px 24px rgba(15,23,42,.22)}
+.empty-dataset-btn:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.empty-dataset-btn.is-active{background:color-mix(in srgb,var(--accent) 18%, var(--panel));border-color:color-mix(in srgb,var(--accent) 55%, var(--border));color:var(--accent);box-shadow:0 12px 28px rgba(37,99,235,.22)}
+.empty-state-note{margin:0;color:var(--muted)}
+.empty-open-btn{border:1px solid var(--accent);background:linear-gradient(180deg,var(--accent),color-mix(in srgb,var(--accent) 85%,#000));color:#fff;font-weight:700;padding:10px 18px;border-radius:999px;cursor:pointer;box-shadow:0 10px 26px rgba(37,99,235,.22);transition:transform .12s ease,box-shadow .25s ease}
+.empty-open-btn:hover{transform:translateY(-1px);box-shadow:0 14px 32px rgba(37,99,235,.28)}
+.empty-open-btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 body:not(.has-data) #emptyState{display:flex;align-items:center;justify-content:center;min-height:60vh}
 body.has-data #emptyState{display:none}
 body:not(.has-data) #topLine,
@@ -111,6 +159,10 @@ body:not(.has-data) #pivotSection{display:none !important}
 .topline{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:8px clamp(14px,3vw,28px)}
 body.has-data #tipPill{display:none !important}
 .topline-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;width:100%}
+.dataset-meta{display:flex;flex-wrap:wrap;gap:10px;width:100%}
+.dataset-meta .meta-card{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:var(--panel);box-shadow:var(--shadow)}
+.dataset-meta .meta-label{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+.dataset-meta .meta-value{font-weight:800;color:var(--text)}
 .pivot-tabs-bar{display:flex;align-items:center;justify-content:flex-start;flex:1 1 auto;min-width:0}
 .pivot-tabs{display:inline-flex;align-items:center;gap:6px;padding:4px;border-radius:14px;border:1px solid var(--border);background:var(--panel);box-shadow:var(--shadow)}
 .pivot-tab{border:0;background:transparent;color:var(--muted);font-weight:700;padding:8px 16px;border-radius:10px;cursor:pointer;transition:color .2s, background .2s, transform .12s;min-width:0}
@@ -170,6 +222,8 @@ body.has-data #tipPill{display:none !important}
   .pivot[data-mode="overall"] .pivot-overall-right{grid-column:2 / 3;}
   .pivot[data-mode="campaignPortfolio"]{grid-template-columns:repeat(2,minmax(0,1fr));}
   .pivot[data-mode="targeting"]{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .pivot[data-mode="targeting"] .pivot-targeting-left{grid-column:1 / 2;}
+  .pivot[data-mode="targeting"] .pivot-targeting-right{grid-column:2 / 3;}
 }
 .chart-card{position:relative;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:12px 12px 10px;box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:visible}
 .chart-title{font-weight:700;margin-bottom:8px;color:var(--muted);display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -251,6 +305,7 @@ body.has-data #tipPill{display:none !important}
 .pivot-sort-indicator{font-size:10px;opacity:.75}
 .pivot-table thead th:first-child{text-align:left}
 .pivot-table thead th.pivot-sku{text-align:left}
+.pivot-table thead th.pivot-brand{text-align:left}
 .pivot-table thead th.pivot-acos{text-align:right}
 .pivot-table thead th.pivot-acos-bar{padding-left:0;text-align:left;width:90px}
 .pivot-table tbody th{padding:8px 12px;border-bottom:1px solid var(--border);text-align:left;font-weight:600;color:var(--text);white-space:normal;word-break:break-word;overflow-wrap:anywhere}
@@ -263,6 +318,7 @@ body.has-data #tipPill{display:none !important}
 .pivot-table tbody tr:hover{background:var(--chip)}
 .pivot-table td.pivot-num{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
 .pivot-table td.pivot-sku{text-align:left;white-space:normal;word-break:break-word}
+.pivot-table td.pivot-brand{text-align:left;white-space:normal;word-break:break-word}
 .pivot-table tfoot th,.pivot-table tfoot td{padding:12px;border:0;font-weight:800;background:var(--panel);position:sticky;bottom:0;z-index:2;border-top:3px double var(--border-strong);box-shadow:none}
 .pivot-table tfoot th{text-align:left}
 .pivot-table tfoot td{text-align:right}
@@ -360,7 +416,27 @@ body.has-data #tipPill{display:none !important}
 <body>
 
 <header id="appHeader" class="app-header">
-  <div class="header-title"><h1>🔎 Search Terms Analytics</h1></div>
+  <div class="header-left">
+    <div class="dataset-menu" id="datasetMenuContainer">
+      <button id="datasetMenuBtn" type="button" class="dataset-menu-trigger" title="Select dataset" aria-label="Select dataset" aria-haspopup="true" aria-expanded="false">
+        <span class="sr-only">Select dataset</span>
+        <span class="dataset-menu-icon" aria-hidden="true">
+          <span class="dataset-menu-line top"></span>
+          <span class="dataset-menu-line middle"></span>
+          <span class="dataset-menu-line bottom"></span>
+        </span>
+      </button>
+      <div id="datasetMenu" class="dataset-menu-popup" role="menu" aria-orientation="vertical" hidden>
+        <div class="dataset-menu-head">
+          <span>Datasets</span>
+          <span id="datasetMenuCurrent" class="dataset-menu-current">No dataset loaded</span>
+        </div>
+        <div id="datasetMenuList" class="dataset-menu-list" role="none"></div>
+        <div id="datasetMenuEmpty" class="dataset-menu-empty" hidden>No built-in datasets found</div>
+      </div>
+    </div>
+    <div class="header-title"><h1 id="datasetTitle">Search Terms Analytics</h1></div>
+  </div>
   <div class="header-search">
     <div class="filter header-filter term-search" data-col-wrapper="term">
       <label data-col-label="term" data-default="Search Term" class="sr-only">Search Term</label>
@@ -378,12 +454,19 @@ body.has-data #tipPill{display:none !important}
 </header>
 
 <main id="contentWrap">
-  <div id="emptyState" class="empty-state" role="status">
-    📄 No Excel detected. Click <span id="emptyOpenLink" role="button" tabindex="0">Open XLSX</span> to load a file.
+  <div id="emptyState" class="empty-state" role="status" aria-live="polite">
+    <p class="empty-state-lede">📊 Select a dataset to explore the dashboards.</p>
+    <div class="empty-state-actions">
+      <div id="emptyDatasetOptions" class="empty-dataset-options" role="group" aria-label="Available datasets"></div>
+      <div>
+        <p class="empty-state-note">or load your own file</p>
+        <button id="emptyOpenBtn" type="button" class="empty-open-btn">Open XLSX</button>
+      </div>
+    </div>
   </div>
 
   <div class="topline" id="topLine">
-    <div class="pill" id="tipPill" hidden>📄 No Excel detected. Click <b>Open XLSX</b> to load a file.</div>
+    <div class="pill" id="tipPill" hidden>📊 Choose a dataset from the menu or click <b>Open XLSX</b> to load a file.</div>
     <div class="topline-controls">
       <div class="pivot-tabs-bar" id="pivotTabsBar" hidden>
         <div id="pivotTabs" class="pivot-tabs" role="tablist" aria-label="Pivot views">
@@ -420,6 +503,16 @@ body.has-data #tipPill{display:none !important}
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="dataset-meta" id="datasetMeta" hidden>
+      <div class="meta-card" aria-live="polite">
+        <span class="meta-label">Data till</span>
+        <span class="meta-value" id="dataTillValue">—</span>
+      </div>
+      <div class="meta-card" aria-live="polite">
+        <span class="meta-label">Last Updated</span>
+        <span class="meta-value" id="lastUpdatedValue">—</span>
       </div>
     </div>
   </div>
@@ -544,7 +637,7 @@ body.has-data #tipPill{display:none !important}
       <table id="pivotTablePlacement" class="pivot-table"></table>
     </div>
   </div>
-  <div class="chart-card pivot-card" id="pivotCampaignCard">
+  <div class="chart-card pivot-card pivot-overall-right" id="pivotCampaignCard">
     <div class="chart-title">
       <span class="chart-title-text">Campaign Performance Pivot</span>
       <button type="button" class="pivot-action-btn pivot-copy-btn" data-copy-target="pivotTableCampaign" title="Copy Campaign Performance Pivot table" aria-label="Copy Campaign Performance Pivot table">
@@ -560,7 +653,7 @@ body.has-data #tipPill{display:none !important}
       <table id="pivotTableCampaign" class="pivot-table"></table>
     </div>
   </div>
-  <div class="chart-card pivot-card" id="pivotAdGroupCard">
+  <div class="chart-card pivot-card pivot-overall-right" id="pivotAdGroupCard">
     <div class="chart-title">
       <span class="chart-title-text">Ad Group Performance Pivot</span>
       <button type="button" class="pivot-action-btn pivot-copy-btn" data-copy-target="pivotTableAdGroup" title="Copy Ad Group Performance Pivot table" aria-label="Copy Ad Group Performance Pivot table">
@@ -593,7 +686,7 @@ body.has-data #tipPill{display:none !important}
       </table>
     </div>
   </div>
-  <div class="chart-card pivot-card" id="pivotTargetingAsinCard">
+  <div class="chart-card pivot-card pivot-targeting-left" id="pivotTargetingAsinCard">
     <div class="chart-title">
       <span class="chart-title-text">Targeting ASIN Performance Pivot</span>
       <button type="button" class="pivot-action-btn pivot-copy-btn" data-copy-target="pivotTableTargetingAsin" title="Copy Targeting ASIN Performance Pivot table" aria-label="Copy Targeting ASIN Performance Pivot table">
@@ -609,7 +702,23 @@ body.has-data #tipPill{display:none !important}
       <table id="pivotTableTargetingAsin" class="pivot-table"></table>
     </div>
   </div>
-  <div class="chart-card pivot-card" id="pivotTargetingCatCard">
+  <div class="chart-card pivot-card pivot-targeting-left" id="pivotTargetingKeywordCard">
+    <div class="chart-title">
+      <span class="chart-title-text">Keywords Performance Pivot</span>
+      <button type="button" class="pivot-action-btn pivot-copy-btn" data-copy-target="pivotTableTargetingKeyword" title="Copy Keywords Performance Pivot table" aria-label="Copy Keywords Performance Pivot table">
+        <span class="pivot-copy-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+            <rect x="5" y="5" width="12" height="12" rx="3" ry="3" opacity=".45"></rect>
+            <rect x="8" y="7" width="12" height="12" rx="3" ry="3"></rect>
+          </svg>
+        </span>
+      </button>
+    </div>
+    <div class="pivot-body">
+      <table id="pivotTableTargetingKeyword" class="pivot-table"></table>
+    </div>
+  </div>
+  <div class="chart-card pivot-card pivot-targeting-left" id="pivotTargetingCatCard">
     <div class="chart-title">
       <span class="chart-title-text">Targeting CAT Performance Pivot</span>
       <button type="button" class="pivot-action-btn pivot-copy-btn" data-copy-target="pivotTableTargetingCat" title="Copy Targeting CAT Performance Pivot table" aria-label="Copy Targeting CAT Performance Pivot table">
@@ -625,7 +734,7 @@ body.has-data #tipPill{display:none !important}
       <table id="pivotTableTargetingCat" class="pivot-table"></table>
     </div>
   </div>
-  <div class="chart-card pivot-card pivot-conversion" id="pivotConversionStCard">
+  <div class="chart-card pivot-card pivot-conversion pivot-targeting-right" id="pivotConversionStCard">
     <div class="chart-title">
       <span class="chart-title-text">Customer Search Term (ST) Performance Pivot</span>
       <button type="button" class="pivot-action-btn pivot-copy-btn" data-copy-target="pivotTableConversionSt" title="Copy Customer Search Term (ST) Performance Pivot table" aria-label="Copy Customer Search Term (ST) Performance Pivot table">
@@ -641,7 +750,7 @@ body.has-data #tipPill{display:none !important}
       <table id="pivotTableConversionSt" class="pivot-table"></table>
     </div>
   </div>
-  <div class="chart-card pivot-card pivot-conversion" id="pivotConversionAsinCard">
+  <div class="chart-card pivot-card pivot-conversion pivot-targeting-right" id="pivotConversionAsinCard">
     <div class="chart-title">
       <span class="chart-title-text">Customer Search Term (ASIN) Performance Pivot</span>
       <button type="button" class="pivot-action-btn pivot-copy-btn" data-copy-target="pivotTableConversionAsin" title="Copy Customer Search Term (ASIN) Performance Pivot table" aria-label="Copy Customer Search Term (ASIN) Performance Pivot table">
@@ -1870,6 +1979,7 @@ const fmt={
   num0:n=>isFinite(n)?new Intl.NumberFormat(undefined,{maximumFractionDigits:0,minimumFractionDigits:0}).format(n):"—"
 };
 const MONTH_NAMES=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const LAST_PUSH_DATE="2025-11-20 08:17:25 +0000";
 const normalize=s=>String(s||"").trim().toLowerCase().replace(/\s+/g," ");
 function normalizeAdvertisedKey(value){
   if(value==null) return '';
@@ -1886,8 +1996,45 @@ const toDMY=d=>!(d instanceof Date)?"":`${String(d.getDate()).padStart(2,'0')} $
 const parseDMY=(s)=>{ if(!s) return null; const m=String(s).match(/^(\d{2})[-/](\d{2})[-/](\d{4})$/); if(!m) return null; const d=new Date(+m[3], +m[2]-1, +m[1]); return isNaN(+d)?null:d; };
 const toInputDate=d=>!(d instanceof Date)?"":`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 const parseInputDate=s=>{ if(!s) return null; const m=String(s).match(/^(\d{4})-(\d{2})-(\d{2})$/); if(!m) return null; const d=new Date(+m[1], +m[2]-1, +m[3]); return isNaN(+d)?null:d; };
+const parseAnyDate=value=>{ if(value instanceof Date) return value; if(!value) return null; const trimmed=String(value).trim(); return parseInputDate(trimmed) || parseDMY(trimmed) || (isNaN(+new Date(trimmed))?null:new Date(trimmed)); };
+const formatDisplayDate=value=>{ const d=parseAnyDate(value); return d?toDMY(d):'—'; };
 const cloneDate=d=> (d instanceof Date) ? new Date(d.getTime()) : null;
-function parseNumber(v){ if(v==null || v==="") return 0; if(typeof v==='number' && isFinite(v)) return v; let s=String(v).trim(); if(/^\(.*\)$/.test(s)) s='-'+s.slice(1,-1); if(/%$/.test(s)){ const num=parseFloat(s.replace(/[%\s,]/g,'')); return isFinite(num)?num/100:0; } s=s.replace(/[$€£₹¥₩]/g,'').replace(/,/g,'').replace(/[^\d.\-]/g,'').trim(); const num=parseFloat(s); return isFinite(num)?num:0; }
+function parseNumber(v){
+  if(v==null || v==="") return 0;
+  if(typeof v==='number' && isFinite(v)) return v;
+  let s=String(v).trim();
+  if(!s) return 0;
+  const currencyCodePattern=/^(?:USD|CAD|AUD|NZD|EUR|GBP|INR|JPY|CNY|RMB|HKD|SGD|CHF|SEK|NOK|DKK|ZAR|MXN|BRL|AED|SAR|QAR|OMR|KWD|US|CA|AU|NZ|HK|SG|CN)\s*/i;
+  if(currencyCodePattern.test(s)){
+    s=s.replace(currencyCodePattern,"");
+  }
+  s=s.replace(/(?:USD|CAD|AUD|NZD|EUR|GBP|INR|JPY|CNY|RMB|HKD|SGD|CHF|SEK|NOK|DKK|ZAR|MXN|BRL|AED|SAR|QAR|OMR|KWD|US|CA|AU|NZ|HK|SG|CN)\s*$/i,"");
+  s=s.replace(/(?:USD|CAD|AUD|NZD|EUR|GBP|INR|JPY|CNY|RMB|HKD|SGD|CHF|SEK|NOK|DKK|ZAR|MXN|BRL|AED|SAR|QAR|OMR|KWD|US|CA|AU|NZ|HK|SG|CN)\$/gi,"$");
+  let negative=false;
+  if(/^\(.*\)$/.test(s)){
+    s=s.slice(1,-1);
+    negative=true;
+  }
+  let isPercent=false;
+  if(/%$/.test(s)){
+    isPercent=true;
+    s=s.replace(/%+$/,'');
+  }
+  s=s.replace(/[$€£₹¥₩]/g,'');
+  s=s.replace(/\s+/g,'');
+  s=s.replace(/,/g,'');
+  if(negative && !/^[-]/.test(s)){
+    s='-'+s;
+  }
+  let num=Number(s);
+  if(!Number.isFinite(num)){
+    const match=s.match(/[+\-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+\-]?\d+)?/);
+    num=match?Number(match[0]):NaN;
+  }
+  if(!Number.isFinite(num)) num=0;
+  if(isPercent) num/=100;
+  return num;
+}
 function clampPanelRight(panel){ panel.style.left='0'; panel.style.right='auto'; const rect=panel.getBoundingClientRect(), vw=document.documentElement.clientWidth; if(rect.right>vw-10){ panel.style.left='auto'; panel.style.right='0'; }}
 
 function hideCustomRangePanel(){
@@ -2028,9 +2175,13 @@ function handleCustomRangeCancel(){
 
 /* ===== elements/state ===== */
 const el={
+  datasetTitle:document.getElementById('datasetTitle'),
   header:document.getElementById('appHeader'),
   topLine:document.getElementById('topLine'),
   tipPill:document.getElementById('tipPill'),
+  datasetMeta:document.getElementById('datasetMeta'),
+  dataTill:document.getElementById('dataTillValue'),
+  lastUpdated:document.getElementById('lastUpdatedValue'),
   monthsWrap:document.getElementById('monthsWrap'),
   monthDD:document.getElementById('monthFilter'),
   monthList:document.getElementById('monthList'),
@@ -2059,6 +2210,7 @@ const el={
     adGroup:{card:document.getElementById('pivotAdGroupCard'),table:document.getElementById('pivotTableAdGroup')},
     portfolio:{card:document.getElementById('pivotPortfolioCard'),table:document.getElementById('pivotTablePortfolio')},
     targetingAsin:{card:document.getElementById('pivotTargetingAsinCard'),table:document.getElementById('pivotTableTargetingAsin')},
+    targetingKeyword:{card:document.getElementById('pivotTargetingKeywordCard'),table:document.getElementById('pivotTableTargetingKeyword')},
     targetingCat:{card:document.getElementById('pivotTargetingCatCard'),table:document.getElementById('pivotTableTargetingCat')},
     conversionSt:{
       card:document.getElementById('pivotConversionStCard'),
@@ -2098,6 +2250,14 @@ const el={
   dlCsv:document.getElementById('downloadCsvBtn'),
   openFiltersBtn:document.getElementById('openFilters'),
   resetFiltersBtn:document.getElementById('resetFilters'),
+  datasetMenu:{
+    container:document.getElementById('datasetMenuContainer'),
+    btn:document.getElementById('datasetMenuBtn'),
+    popup:document.getElementById('datasetMenu'),
+    list:document.getElementById('datasetMenuList'),
+    current:document.getElementById('datasetMenuCurrent'),
+    empty:document.getElementById('datasetMenuEmpty')
+  },
   modal:document.getElementById('filtersModal'),
   closeFiltersBtn:document.getElementById('closeFilters'),
   cancelFiltersBtn:document.getElementById('cancelFilters'),
@@ -2106,7 +2266,8 @@ const el={
   filters:document.getElementById('filtersSection'),
   themeBtn:document.getElementById('themeBtn'),
   empty:document.getElementById('emptyState'),
-  emptyOpen:document.getElementById('emptyOpenLink'),
+  emptyDatasetOptions:document.getElementById('emptyDatasetOptions'),
+  emptyOpen:document.getElementById('emptyOpenBtn'),
   kpi:{
     spend:document.getElementById('kpiSpend'),
     revenue:document.getElementById('kpiRevenue'),
@@ -2135,6 +2296,7 @@ const el={
     term:document.getElementById('termMS')
   }
 };
+const DEFAULT_HEADER_TITLE='Search Terms Analytics';
 const state={
   rows:[],
   columns:{},
@@ -2148,6 +2310,7 @@ const state={
   customRange:{start:null,end:null,active:false},
   dateBounds:{min:null,max:null},
   asinSkuMap:new Map(),
+  asinBrandMap:new Map(),
   asinSkuLoaded:false,
   asinValueMap:new Map(),
   advertisedProducts:{rows:[],loaded:false,renderToken:0,lastSlot:null},
@@ -2157,10 +2320,259 @@ const state={
   activePivotPopup:null,
   activePivotModal:null,
   filtersReturn:null,
-  sql:{db:null, table:'', columns:[], columnMap:new Map(), rowCount:0}
+  sql:{db:null, table:'', columns:[], columnMap:new Map(), rowCount:0},
+  dataset:{type:'',file:'',label:''}
 };
-const TAB_ORDER=['overview','overall','campaignPortfolio','targeting'];
-const PIVOT_SORT_KEYS=new Set(['label','sku','spend','sales','acos']);
+
+function updateDatasetTitle(){
+  const titleEl=el.datasetTitle;
+  if(!titleEl) return;
+  const dataset=state.dataset || {label:''};
+  const label=String(dataset.label||'').trim();
+  const text=label || DEFAULT_HEADER_TITLE;
+  titleEl.textContent=text;
+  try{
+    document.title=label?`${label} – ${DEFAULT_HEADER_TITLE}`:DEFAULT_HEADER_TITLE;
+  }catch(_){ }
+}
+
+function updateDatasetMeta(){
+  if(!el.datasetMeta || !el.dataTill || !el.lastUpdated) return;
+  const hasData=!!state.hasData;
+  el.dataTill.textContent=hasData?formatDisplayDate(state.dateBounds?.max):'—';
+  el.lastUpdated.textContent=formatDisplayDate(LAST_PUSH_DATE);
+  el.datasetMeta.hidden=!hasData;
+}
+
+function setActiveDataset(info){
+  if(!info){
+    state.dataset={type:'',file:'',label:''};
+  }else{
+    const file=info.file?String(info.file).trim():'';
+    const label=info.label || (file?formatDatasetLabelFromFile(file):'');
+    state.dataset={
+      type:info.type||'',
+      file,
+      label:label || file
+    };
+  }
+  applyDatasetOverrides(state.dataset);
+  updateDatasetMenuActive();
+  updateDatasetTitle();
+}
+
+function applyDatasetOverrides(dataset){
+  TAB_ORDER=DEFAULT_TAB_ORDER.slice();
+  PIVOT_CONFIG=clonePivotConfig(DEFAULT_PIVOT_CONFIG);
+  const file=(dataset?.file||'').toLowerCase();
+  const label=(dataset?.label||'').toLowerCase();
+  const isProductsCampaign=file.includes('products campaign') || label.includes('products campaign');
+  if(isProductsCampaign){
+    TAB_ORDER=TAB_ORDER.filter(tab=>tab!=='campaignPortfolio' && tab!=='targeting');
+    delete PIVOT_CONFIG.campaignPortfolio;
+    delete PIVOT_CONFIG.targeting;
+    const overall=PIVOT_CONFIG.overall||[];
+    const ensureSlot=(slot,column,fallback,options)=>{
+      if(!overall.some(entry=>entry?.slot===slot)){
+        const cfg={slot,column,fallback};
+        if(options) cfg.options={...options};
+        overall.push(cfg);
+      }
+    };
+    ensureSlot('campaign','campaign','Campaign Name');
+    ensureSlot('adGroup','adgroup','Ad Group Name');
+  }
+  updateTabButtonsForOrder(TAB_ORDER);
+  if(!TAB_ORDER.includes(state.activeTab)){
+    state.activeTab=TAB_ORDER[0] || 'overview';
+  }
+  state.lastTabIndex=TAB_ORDER.indexOf(state.activeTab);
+  updateTabsUI();
+  if(state.hasData) updateAdvertisedProductsDisplay();
+}
+
+function updateTabButtonsForOrder(order){
+  if(!el.tabs?.list) return;
+  const allowed=new Set(order||[]);
+  const buttons=Array.from(el.tabs.list.querySelectorAll('[data-tab]'));
+  buttons.forEach(btn=>{
+    const tab=btn.dataset.tab;
+    const show=allowed.size===0 || allowed.has(tab);
+    btn.hidden=!show;
+    if(!show){
+      btn.setAttribute('aria-hidden','true');
+      btn.setAttribute('tabindex','-1');
+      btn.setAttribute('aria-selected','false');
+      btn.classList.remove('is-active');
+    }else{
+      btn.removeAttribute('aria-hidden');
+    }
+  });
+  el.tabs.buttons=buttons.filter(btn=>!btn.hidden);
+  if(el.tabs.bar){
+    el.tabs.bar.hidden = el.tabs.buttons.length<=1;
+  }
+}
+
+function updateDatasetMenuActive(){
+  const dataset=state.dataset||{type:'',file:'',label:''};
+  const menu=el.datasetMenu||{};
+  if(menu.list){
+    menu.list.querySelectorAll('[data-dataset-id]').forEach(item=>{
+      const type=item.dataset.datasetType||'';
+      const file=item.dataset.datasetFile||'';
+      const isActive=!!dataset.file && dataset.type===type && dataset.file===file;
+      item.classList.toggle('is-active', isActive);
+      item.setAttribute('aria-checked', isActive?'true':'false');
+    });
+  }
+  if(el.emptyDatasetOptions){
+    el.emptyDatasetOptions.querySelectorAll('[data-dataset-id]').forEach(button=>{
+      const type=button.dataset.datasetType||'';
+      const file=button.dataset.datasetFile||'';
+      const isActive=!!dataset.file && dataset.type===type && dataset.file===file;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', isActive?'true':'false');
+    });
+  }
+  if(menu.current){
+    menu.current.textContent = dataset.label ? `Current: ${dataset.label}` : 'No dataset loaded';
+  }
+  const base='Select dataset';
+  const suffix=dataset.label?` (current: ${dataset.label})`:'';
+  if(menu.btn){
+    const label=`${base}${suffix}`;
+    menu.btn.setAttribute('aria-label', label);
+    menu.btn.setAttribute('title', label);
+  }
+}
+
+function isDatasetMenuOpen(){
+  const popup=el.datasetMenu?.popup;
+  return !!(popup && !popup.hasAttribute('hidden'));
+}
+
+function openDatasetMenu(){
+  const menu=el.datasetMenu;
+  if(!menu?.popup) return false;
+  if(isDatasetMenuOpen()) return false;
+  menu.popup.classList.add('open');
+  menu.popup.removeAttribute('hidden');
+  if(menu.container) menu.container.classList.add('is-open');
+  if(menu.btn) menu.btn.setAttribute('aria-expanded','true');
+  clampPanelRight(menu.popup);
+  return true;
+}
+
+function closeDatasetMenu(focusBtn=true){
+  const menu=el.datasetMenu;
+  if(!menu?.popup) return false;
+  if(menu.popup.hasAttribute('hidden')) return false;
+  menu.popup.classList.remove('open');
+  menu.popup.setAttribute('hidden','');
+  if(menu.container) menu.container.classList.remove('is-open');
+  if(menu.btn){
+    menu.btn.setAttribute('aria-expanded','false');
+    if(focusBtn){
+      try{ menu.btn.focus({preventScroll:true}); }catch(_){ }
+    }
+  }
+  return true;
+}
+
+function toggleDatasetMenu(){
+  if(isDatasetMenuOpen()) closeDatasetMenu(false);
+  else openDatasetMenu();
+}
+
+async function handleDatasetSelection(type,file,label){
+  const datasetType=type||'';
+  const datasetFile=file||'';
+  const datasetLabel=label || formatDatasetLabelFromFile(datasetFile);
+  if(!datasetType || !datasetFile) return;
+  try{
+    showLoading(true);
+    if(datasetType==='workbook'){
+      await loadWorkbookDatasetFromUrl(datasetFile,datasetLabel);
+    }else if(datasetType==='preprocessed'){
+      await loadPreprocessedDatasetFromUrl(datasetFile,datasetLabel);
+    }
+  }catch(err){
+    console.error(`Failed to load dataset ${datasetFile}:`, err);
+    alert(`Unable to load dataset "${datasetLabel}": ${err?.message||err}`);
+    if(!state.hasData) setHasData(false);
+  }finally{
+    showLoading(false);
+  }
+}
+
+function promptInitialDatasetSelection(){
+  if(datasetPromptShown || state.hasData) return;
+  const menu=el.datasetMenu;
+  if(!menu?.list || !menu?.popup) return;
+  const firstOption=menu.list.querySelector('[data-dataset-id]');
+  if(!firstOption) return;
+  const opened=openDatasetMenu();
+  datasetPromptShown=true;
+  if(opened){
+    try{ firstOption.focus({preventScroll:true}); }catch(_){ }
+  }
+}
+
+function initDatasetMenu(){
+  const menu=el.datasetMenu;
+  if(!menu?.list) return;
+  const options=getBuiltinDatasetOptions();
+  menu.list.innerHTML='';
+  if(options.length){
+    options.forEach(opt=>{
+      const button=document.createElement('button');
+      button.type='button';
+      button.className='dataset-menu-item';
+      button.dataset.datasetId=opt.id;
+      button.dataset.datasetType=opt.type;
+      button.dataset.datasetFile=opt.file;
+      button.dataset.datasetLabel=opt.label;
+      button.setAttribute('role','menuitemradio');
+      button.setAttribute('aria-checked','false');
+      const metaText=opt.meta?`<span class="dataset-menu-meta">${escapeHtml(opt.meta)}</span>`:'';
+      button.innerHTML=`<span class="dataset-menu-name">${escapeHtml(opt.label)}</span>${metaText}<span class="dataset-menu-check" aria-hidden="true">✔</span>`;
+      menu.list.appendChild(button);
+    });
+    if(menu.empty) menu.empty.hidden=true;
+  }else if(menu.empty){
+    menu.empty.hidden=false;
+  }
+  if(menu.list) menu.list.hidden = !options.length;
+  if(menu.list && !menu.list.__datasetMenuBound){
+    menu.list.addEventListener('click', onDatasetMenuClick);
+    menu.list.__datasetMenuBound=true;
+  }
+  if(menu.btn && !menu.btn.__datasetMenuBound){
+    menu.btn.addEventListener('click', ev=>{
+      ev.preventDefault();
+      toggleDatasetMenu();
+    });
+    menu.btn.__datasetMenuBound=true;
+  }
+  renderEmptyStateDatasetOptions();
+  updateDatasetMenuActive();
+}
+
+
+async function onDatasetMenuClick(event){
+  const button=event.target.closest?.('[data-dataset-id]');
+  if(!button) return;
+  event.preventDefault();
+  const type=button.dataset.datasetType||'';
+  const file=button.dataset.datasetFile||'';
+  const label=button.dataset.datasetLabel || formatDatasetLabelFromFile(file);
+  closeDatasetMenu(false);
+  await handleDatasetSelection(type,file,label);
+}
+const DEFAULT_TAB_ORDER=['overview','overall','campaignPortfolio','targeting'];
+let TAB_ORDER=DEFAULT_TAB_ORDER.slice();
+const PIVOT_SORT_KEYS=new Set(['label','sku','brand','spend','sales','acos']);
 
 const kpiSparkCache=new Map();
 const copyFeedbackTimers=new WeakMap();
@@ -2170,7 +2582,14 @@ let lastKpiSeries=null;
 let pivotLayoutFrame=null;
 let skuSyncing=false;
 if(el.tabs?.list){ el.tabs.buttons = Array.from(el.tabs.list.querySelectorAll('[data-tab]')); }
-const PIVOT_CONFIG={
+function clonePivotConfig(source){
+  const copy={};
+  Object.entries(source||{}).forEach(([key,value])=>{
+    copy[key]=Array.isArray(value)?value.map(item=>({...item})):[];
+  });
+  return copy;
+}
+const DEFAULT_PIVOT_CONFIG={
   overview:[
     {slot:'store', column:'store', fallback:'Store'},
     {slot:'portfolio', column:'portfolio', fallback:'Portfolio Name', options:{caseInsensitive:true}},
@@ -2190,12 +2609,14 @@ const PIVOT_CONFIG={
   ],
   targeting:[
     {slot:'targetingAsin', column:'targetingAsin', fallback:'Targeting ASIN'},
+    {slot:'targetingKeyword', column:'targeting', fallback:'Targeting', options:{baseFilters:[{stateKey:'tsub', values:['Keyword']}]}},
     {slot:'targetingCat', column:'targetingCat', fallback:'Targeting CAT'}
   ]
 };
+let PIVOT_CONFIG=clonePivotConfig(DEFAULT_PIVOT_CONFIG);
 const INITIAL_FILTER_KEYS=(()=>{
   const keys=new Set(['term']);
-  (PIVOT_CONFIG.overview||[]).forEach(cfg=>{
+  (DEFAULT_PIVOT_CONFIG.overview||[]).forEach(cfg=>{
     if(cfg?.column) keys.add(cfg.column);
   });
   return Array.from(keys);
@@ -2203,30 +2624,120 @@ const INITIAL_FILTER_KEYS=(()=>{
 const FILTER_BACKFILL_CHUNK_SIZE=3;
 let filterBackfillToken=0;
 const pivotFilterPopupState={slot:'', options:[], filtered:[], dimension:null, button:null, displayName:'', search:'', mode:'dimension', dateTab:'months'};
-const DEFAULT_PREPROCESSED_DATA=[
-  'preprocessed/search_terms.json'
-];
+const DEFAULT_PREPROCESSED_DATA=[];
 const DEFAULT_WORKBOOKS=[
-  'Product Search Term.xlsx',
-  'Products Search Term.xlsx'
+  'Products Search Term.xlsx',
+  'Products Campaign.xlsx'
 ];
 const ASIN_SKU_WORKBOOK='ASINwise SKU.xlsx';
-const ADVERTISED_PRODUCTS_WORKBOOK='Products Advertised Product.xlsx';
+const ADVERTISED_PRODUCTS_WORKBOOK=ASIN_SKU_WORKBOOK;
 let asinSkuPromise=null;
 let advertisedProductsPromise=null;
-let defaultWorkbookPromise=null;
-let defaultWorkbookTimer=null;
 let loadingDepth=0;
+let datasetPromptShown=false;
+
+function formatDatasetLabelFromFile(file){
+  if(!file) return '';
+  const parts=String(file).split(/[\\/]/);
+  const name=parts[parts.length-1]||String(file);
+  const withoutExt=name.replace(/\.[^.]+$/,'');
+  const prettified=withoutExt.replace(/[_-]+/g,' ').replace(/\s+/g,' ').trim();
+  return prettified||withoutExt||name;
+}
+
+function createDatasetId(type,file){
+  return `${type||''}:${(file||'').toLowerCase()}`;
+}
+
+function getBuiltinDatasetOptions(){
+  const options=[];
+  if(Array.isArray(DEFAULT_WORKBOOKS)){
+    DEFAULT_WORKBOOKS.forEach(file=>{
+      const trimmed=typeof file==='string'?file.trim():'';
+      if(!trimmed) return;
+      options.push({
+        id:createDatasetId('workbook', trimmed),
+        type:'workbook',
+        file:trimmed,
+        label:formatDatasetLabelFromFile(trimmed),
+        meta:'Workbook'
+      });
+    });
+  }
+  if(Array.isArray(DEFAULT_PREPROCESSED_DATA)){
+    DEFAULT_PREPROCESSED_DATA.forEach(file=>{
+      const trimmed=typeof file==='string'?file.trim():'';
+      if(!trimmed) return;
+      options.push({
+        id:createDatasetId('preprocessed', trimmed),
+        type:'preprocessed',
+        file:trimmed,
+        label:formatDatasetLabelFromFile(trimmed),
+        meta:'Preprocessed'
+      });
+    });
+  }
+  return options;
+}
+
+function renderEmptyStateDatasetOptions(){
+  const container=el.emptyDatasetOptions;
+  if(!container) return;
+  const options=getBuiltinDatasetOptions();
+  container.innerHTML='';
+  if(!options.length){
+    container.hidden=true;
+    container.setAttribute('hidden','');
+    container.setAttribute('aria-hidden','true');
+    return;
+  }
+  container.hidden=false;
+  container.removeAttribute('hidden');
+  container.removeAttribute('aria-hidden');
+  const frag=document.createDocumentFragment();
+  options.forEach(opt=>{
+    const button=document.createElement('button');
+    button.type='button';
+    button.className='empty-dataset-btn';
+    button.dataset.datasetId=opt.id;
+    button.dataset.datasetType=opt.type;
+    button.dataset.datasetFile=opt.file;
+    button.dataset.datasetLabel=opt.label;
+    button.textContent=opt.label;
+    button.setAttribute('aria-pressed','false');
+    frag.appendChild(button);
+  });
+  container.appendChild(frag);
+  if(!container.__datasetOptionsBound){
+    container.addEventListener('click', onEmptyDatasetOptionClick);
+    container.__datasetOptionsBound=true;
+  }
+}
+
+async function onEmptyDatasetOptionClick(event){
+  const button=event.target.closest?.('.empty-dataset-btn');
+  if(!button) return;
+  event.preventDefault();
+  const type=button.dataset.datasetType||'';
+  const file=button.dataset.datasetFile||'';
+  const label=button.dataset.datasetLabel || formatDatasetLabelFromFile(file);
+  if(isDatasetMenuOpen()) closeDatasetMenu(false);
+  await handleDatasetSelection(type,file,label);
+}
 
 function ensureAsinSkuMap(){
   if(state.asinSkuLoaded){
+    if(!(state.asinBrandMap instanceof Map)) state.asinBrandMap=new Map();
     return Promise.resolve(state.asinSkuMap instanceof Map ? state.asinSkuMap : new Map());
   }
   if(asinSkuPromise){
     return asinSkuPromise;
   }
-  asinSkuPromise=loadAsinSkuWorkbook().then(map=>{
-    state.asinSkuMap = map instanceof Map ? map : new Map();
+  asinSkuPromise=loadAsinSkuWorkbook().then(meta=>{
+    const skuMap = meta && meta.skuMap instanceof Map ? meta.skuMap : new Map();
+    const brandMap = meta && meta.brandMap instanceof Map ? meta.brandMap : new Map();
+    state.asinSkuMap = skuMap;
+    state.asinBrandMap = brandMap;
     state.asinSkuLoaded=true;
     if(state.hasData){
       renderAll();
@@ -2235,6 +2746,7 @@ function ensureAsinSkuMap(){
     return state.asinSkuMap;
   }).catch(()=>{
     state.asinSkuMap=new Map();
+    state.asinBrandMap=new Map();
     state.asinSkuLoaded=true;
     return state.asinSkuMap;
   });
@@ -2243,7 +2755,7 @@ function ensureAsinSkuMap(){
 
 async function loadAsinSkuWorkbook(){
   const file=ASIN_SKU_WORKBOOK && ASIN_SKU_WORKBOOK.trim();
-  if(!file) return new Map();
+  if(!file) return {skuMap:new Map(), brandMap:new Map()};
   try{
     let targetUrl;
     try{
@@ -2255,81 +2767,31 @@ async function loadAsinSkuWorkbook(){
     if(!response.ok && response.status!==0) throw new Error('ASIN SKU workbook not found');
     const buf=await response.arrayBuffer();
     const wb=XLSX.read(buf,{type:'array',cellDates:false,cellNF:false,cellText:false});
-    if(!wb.SheetNames || !wb.SheetNames.length) return new Map();
-    const ws=wb.Sheets[wb.SheetNames[0]];
-    if(!ws) return new Map();
-    const rows=XLSX.utils.sheet_to_json(ws,{header:1,raw:false,defval:''});
-    if(!rows || rows.length<2) return new Map();
-    const sanitizeRow=row=>(row||[]).map(v=>String(v??'').trim());
-    let headerIndex=rows.length>1?1:0;
-    let headers=sanitizeRow(rows[headerIndex]);
-    let asinIdx=findIndexByTokens(headers,['advertisedasin','asin']);
-    let sellerIdx=findIndexByTokens(headers,['sellersku','seller sku','seller-sku']);
-    let plainIdx=findIndexByTokens(headers,['plainsku','plain sku','plain-sku']);
-    let skuIdx=findIndexByTokens(headers,['advertisedsku','sku']);
-    if(
-      asinIdx<0 ||
-      (sellerIdx<0 && plainIdx<0 && skuIdx<0)
-    ){
-      for(let i=0;i<Math.min(rows.length,6);i++){
-        const candidate=sanitizeRow(rows[i]);
-        const aIdx=findIndexByTokens(candidate,['advertisedasin','asin']);
-        const sellerCandidate=findIndexByTokens(candidate,['sellersku','seller sku','seller-sku']);
-        const plainCandidate=findIndexByTokens(candidate,['plainsku','plain sku','plain-sku']);
-        const skuCandidate=findIndexByTokens(candidate,['advertisedsku','sku']);
-        if(aIdx>-1 && (sellerCandidate>-1 || plainCandidate>-1 || skuCandidate>-1)){
-          headerIndex=i;
-          headers=candidate;
-          asinIdx=aIdx;
-          sellerIdx=sellerCandidate;
-          plainIdx=plainCandidate;
-          skuIdx=skuCandidate;
-          break;
-        }
+    if(!wb.SheetNames || !wb.SheetNames.length) return {skuMap:new Map(), brandMap:new Map()};
+    let skuMap=null;
+    let brandMap=null;
+    for(const sheetName of wb.SheetNames){
+      const ws=wb.Sheets[sheetName];
+      if(!ws) continue;
+      const rows=XLSX.utils.sheet_to_json(ws,{header:1,raw:false,defval:''});
+      if(!rows || rows.length<2) continue;
+      if(!skuMap){
+        const candidate=buildAsinSkuMapFromRows(rows);
+        if(candidate) skuMap=candidate;
       }
+      if(!brandMap){
+        const brandCandidate=buildAsinBrandMapFromRows(rows);
+        if(brandCandidate) brandMap=brandCandidate;
+      }
+      if(skuMap && brandMap) break;
     }
-    if(asinIdx<0 || (sellerIdx<0 && plainIdx<0 && skuIdx<0)) return new Map();
-    const dataRows=rows.slice(headerIndex+1);
-    const map=new Map();
-    dataRows.forEach(row=>{
-      const safeRow=Array.isArray(row)?row:[];
-      const asin=String(safeRow[asinIdx]??'').trim();
-      if(!asin) return;
-      const sellerSkuRaw=sellerIdx>-1?String(safeRow[sellerIdx]??'').trim():'';
-      const plainSkuRaw=plainIdx>-1?String(safeRow[plainIdx]??'').trim():'';
-      const fallbackSku=skuIdx>-1?String(safeRow[skuIdx]??'').trim():'';
-      const sellerSku=sellerSkuRaw || fallbackSku;
-      const plainSku=plainSkuRaw || fallbackSku;
-      if(!sellerSku && !plainSku) return;
-      const asinKey=normalizeAsinKey(asin);
-      if(!asinKey) return;
-      let list=map.get(asinKey);
-      if(!list){
-        list=[];
-        map.set(asinKey,list);
-      }
-      const entry={
-        sellerSku:sellerSku,
-        plainSku:plainSku
-      };
-      if(!list.some(item=>item && item.sellerSku===entry.sellerSku && item.plainSku===entry.plainSku)){
-        list.push(entry);
-      }
-    });
-    const collator=new Intl.Collator(undefined,{sensitivity:'base',numeric:true});
-    map.forEach(list=>list.sort((a,b)=>{
-      const aSeller=String(a?.sellerSku||a?.plainSku||'');
-      const bSeller=String(b?.sellerSku||b?.plainSku||'');
-      const sellerDiff=collator.compare(aSeller,bSeller);
-      if(sellerDiff!==0) return sellerDiff;
-      const aPlain=String(a?.plainSku||'');
-      const bPlain=String(b?.plainSku||'');
-      return collator.compare(aPlain,bPlain);
-    }));
-    return map;
+    return {
+      skuMap:skuMap||new Map(),
+      brandMap:brandMap||new Map()
+    };
   }catch(err){
     console.warn('ASIN SKU mapping load failed:', err);
-    return new Map();
+    return {skuMap:new Map(), brandMap:new Map()};
   }
 }
 
@@ -2348,6 +2810,15 @@ function lookupAsinSkus(value){
   if(!(map instanceof Map)) return null;
   const list=map.get(key);
   return Array.isArray(list) && list.length ? list : null;
+}
+
+function lookupAsinBrand(value){
+  const key=normalizeAsinKey(value);
+  if(!key) return '';
+  const map=state.asinBrandMap;
+  if(!(map instanceof Map)) return '';
+  const brand=map.get(key);
+  return brand==null?'':String(brand).trim();
 }
 
 function formatSkuEntries(entries){
@@ -2408,14 +2879,135 @@ async function loadAdvertisedProductsWorkbook(){
   const buf=await response.arrayBuffer();
   const wb=XLSX.read(buf,{type:'array',cellDates:false,cellNF:false,cellText:false});
   if(!wb.SheetNames || !wb.SheetNames.length) return [];
-  const ws=wb.Sheets[wb.SheetNames[0]];
-  if(!ws) return [];
-  const rows=XLSX.utils.sheet_to_json(ws,{header:1,raw:false,defval:''});
-  if(!rows || rows.length<2) return [];
-  const sanitizeRow=row=>(row||[]).map(v=>String(v??'').trim());
+  for(const sheetName of wb.SheetNames){
+    const ws=wb.Sheets[sheetName];
+    if(!ws) continue;
+    const rows=XLSX.utils.sheet_to_json(ws,{header:1,raw:false,defval:''});
+    if(!rows || rows.length<2) continue;
+    const data=buildAdvertisedProductsFromRows(rows);
+    if(data && data.length) return data;
+  }
+  return [];
+}
+
+function sanitizeRow(row){
+  return (row||[]).map(v=>String(v??'').trim());
+}
+
+function buildAsinSkuMapFromRows(rows){
+  if(!Array.isArray(rows) || !rows.length) return null;
   const preferredHeaderIndex=rows.length>1?1:0;
   let headerIndex=preferredHeaderIndex;
-  let headers=sanitizeRow(rows[headerIndex]);
+  let headers=sanitizeRow(rows[headerIndex]||[]);
+  let asinIdx=findIndexByTokens(headers,['advertisedasin','asin']);
+  let sellerIdx=findIndexByTokens(headers,['sellersku','seller sku','seller-sku']);
+  let plainIdx=findIndexByTokens(headers,['plainsku','plain sku','plain-sku']);
+  let skuIdx=findIndexByTokens(headers,['advertisedsku','sku']);
+  if(
+    asinIdx<0 ||
+    (sellerIdx<0 && plainIdx<0 && skuIdx<0)
+  ){
+    for(let i=0;i<Math.min(rows.length,6);i++){
+      const candidate=sanitizeRow(rows[i]);
+      const aIdx=findIndexByTokens(candidate,['advertisedasin','asin']);
+      const sellerCandidate=findIndexByTokens(candidate,['sellersku','seller sku','seller-sku']);
+      const plainCandidate=findIndexByTokens(candidate,['plainsku','plain sku','plain-sku']);
+      const skuCandidate=findIndexByTokens(candidate,['advertisedsku','sku']);
+      if(aIdx>-1 && (sellerCandidate>-1 || plainCandidate>-1 || skuCandidate>-1)){
+        headerIndex=i;
+        headers=candidate;
+        asinIdx=aIdx;
+        sellerIdx=sellerCandidate;
+        plainIdx=plainCandidate;
+        skuIdx=skuCandidate;
+        break;
+      }
+    }
+  }
+  if(asinIdx<0 || (sellerIdx<0 && plainIdx<0 && skuIdx<0)) return null;
+  const map=new Map();
+  for(let i=headerIndex+1;i<rows.length;i++){
+    const row=Array.isArray(rows[i])?rows[i]:[];
+    const asin=String(row[asinIdx]??'').trim();
+    if(!asin) continue;
+    const sellerSkuRaw=sellerIdx>-1?String(row[sellerIdx]??'').trim():'';
+    const plainSkuRaw=plainIdx>-1?String(row[plainIdx]??'').trim():'';
+    const fallbackSku=skuIdx>-1?String(row[skuIdx]??'').trim():'';
+    const sellerSku=sellerSkuRaw || fallbackSku;
+    const plainSku=plainSkuRaw || fallbackSku;
+    if(!sellerSku && !plainSku) continue;
+    const asinKey=normalizeAsinKey(asin);
+    if(!asinKey) continue;
+    let list=map.get(asinKey);
+    if(!list){
+      list=[];
+      map.set(asinKey,list);
+    }
+    const entry={
+      sellerSku:sellerSku,
+      plainSku:plainSku
+    };
+    if(!list.some(item=>item && item.sellerSku===entry.sellerSku && item.plainSku===entry.plainSku)){
+      list.push(entry);
+    }
+  }
+  if(!map.size) return null;
+  const collator=new Intl.Collator(undefined,{sensitivity:'base',numeric:true});
+  map.forEach(list=>list.sort((a,b)=>{
+    const aSeller=String(a?.sellerSku||a?.plainSku||'');
+    const bSeller=String(b?.sellerSku||b?.plainSku||'');
+    const sellerDiff=collator.compare(aSeller,bSeller);
+    if(sellerDiff!==0) return sellerDiff;
+    const aPlain=String(a?.plainSku||'');
+    const bPlain=String(b?.plainSku||'');
+    return collator.compare(aPlain,bPlain);
+  }));
+  return map;
+}
+
+function buildAsinBrandMapFromRows(rows){
+  if(!Array.isArray(rows) || !rows.length) return null;
+  const preferredHeaderIndex=rows.length>1?1:0;
+  let headerIndex=preferredHeaderIndex;
+  let headers=sanitizeRow(rows[headerIndex]||[]);
+  let asinIdx=findIndexByTokens(headers,['advertisedasin','asin']);
+  let brandIdx=findIndexByTokens(headers,['brand','brandname','brand name','store','seller']);
+  if(asinIdx<0 || brandIdx<0){
+    for(let i=0;i<Math.min(rows.length,6);i++){
+      const candidate=sanitizeRow(rows[i]);
+      const aIdx=findIndexByTokens(candidate,['advertisedasin','asin']);
+      const bIdx=findIndexByTokens(candidate,['brand','brandname','brand name','store','seller']);
+      if(aIdx>-1 && bIdx>-1){
+        headerIndex=i;
+        headers=candidate;
+        asinIdx=aIdx;
+        brandIdx=bIdx;
+        break;
+      }
+    }
+  }
+  if(asinIdx<0 || brandIdx<0) return null;
+  const map=new Map();
+  for(let i=headerIndex+1;i<rows.length;i++){
+    const row=Array.isArray(rows[i])?rows[i]:[];
+    const asin=String(row[asinIdx]??'').trim();
+    const brand=String(row[brandIdx]??'').trim();
+    if(!asin || !brand) continue;
+    const asinKey=normalizeAsinKey(asin);
+    if(!asinKey) continue;
+    const existing=map.get(asinKey);
+    if(!existing || String(existing).trim().length < brand.length){
+      map.set(asinKey, brand);
+    }
+  }
+  return map.size?map:null;
+}
+
+function buildAdvertisedProductsFromRows(rows){
+  if(!Array.isArray(rows) || !rows.length) return null;
+  const preferredHeaderIndex=rows.length>1?1:0;
+  let headerIndex=preferredHeaderIndex;
+  let headers=sanitizeRow(rows[headerIndex]||[]);
   let idxCampaign=findIndexByTokens(headers,['campaignname','campaign']);
   let idxAdGroup=findIndexByTokens(headers,['adgroupname','ad group name','adgroup']);
   let idxSku=findIndexByTokens(headers,['advertisedsku','sku']);
@@ -2441,15 +3033,15 @@ async function loadAdvertisedProductsWorkbook(){
     }
     if((idxCampaign<0 && idxAdGroup<0) || (idxSku<0 && idxAsin<0)){
       headerIndex=preferredHeaderIndex;
-      headers=sanitizeRow(rows[headerIndex]);
+      headers=sanitizeRow(rows[headerIndex]||[]);
       idxCampaign=findIndexByTokens(headers,['campaignname','campaign']);
       idxAdGroup=findIndexByTokens(headers,['adgroupname','ad group name','adgroup']);
       idxSku=findIndexByTokens(headers,['advertisedsku','sku']);
       idxAsin=findIndexByTokens(headers,['advertisedasin','asin']);
     }
   }
-  if(idxCampaign<0 && idxAdGroup<0) return [];
-  if(idxSku<0 && idxAsin<0) return [];
+  if(idxCampaign<0 && idxAdGroup<0) return null;
+  if(idxSku<0 && idxAsin<0) return null;
   const data=[];
   for(let i=headerIndex+1;i<rows.length;i++){
     const row=Array.isArray(rows[i])?rows[i]:[];
@@ -2468,7 +3060,7 @@ async function loadAdvertisedProductsWorkbook(){
       adGroupKey:normalizeAdvertisedKey(adGroup)
     });
   }
-  return data;
+  return data.length?data:null;
 }
 
 function skuEntriesToValues(entries){
@@ -2832,6 +3424,7 @@ function getPivotConfig(){ return PIVOT_CONFIG[state.activeTab] || PIVOT_CONFIG.
 
 function boot(){
   setHasData(false);
+  initDatasetMenu();
   setupTabs();
   assignPivotSlots();
   updatePivotFilterButtons();
@@ -2840,15 +3433,7 @@ function boot(){
   const triggerPicker=()=>{ if(el.fileInput) el.fileInput.click(); };
   if(el.pickLocalBtn) el.pickLocalBtn.addEventListener('click', triggerPicker);
   if(el.emptyOpen){
-    const openFromEmpty=(ev)=>{
-      if(ev){
-        if(ev.type==='keydown' && !['Enter',' ','Spacebar'].includes(ev.key)) return;
-        if(ev.type==='keydown') ev.preventDefault();
-      }
-      triggerPicker();
-    };
-    el.emptyOpen.addEventListener('click', openFromEmpty);
-    el.emptyOpen.addEventListener('keydown', openFromEmpty);
+    el.emptyOpen.addEventListener('click', triggerPicker);
   }
   if(el.fileInput) el.fileInput.addEventListener('change', handleLocalFile);
   if(el.dlCsv) el.dlCsv.addEventListener('click', onDownloadCsv);
@@ -2882,6 +3467,12 @@ function boot(){
   if(el.monthCustomCancel) el.monthCustomCancel.addEventListener('click', handleCustomRangeCancel);
 
   document.addEventListener('click', (e)=>{
+    if(isDatasetMenuOpen()){
+      const menuRoot=el.datasetMenu?.container;
+      if(menuRoot && !menuRoot.contains(e.target)){
+        closeDatasetMenu(false);
+      }
+    }
     const monthRoot=el.monthDD;
     const clickedInsideMonth=monthRoot?.contains?.(e.target);
     if(monthRoot && !clickedInsideMonth && monthRoot.classList.contains('open')){
@@ -2928,6 +3519,13 @@ function boot(){
 
   document.addEventListener('keydown', (ev)=>{
     if(ev.key==='Escape' || ev.key==='Esc'){
+      if(isDatasetMenuOpen()){
+        if(closeDatasetMenu()){
+          ev.stopPropagation();
+          ev.preventDefault();
+          return;
+        }
+      }
       if(closePivotFilterPopup(false)){
         ev.stopPropagation();
         ev.preventDefault();
@@ -2938,24 +3536,9 @@ function boot(){
   showLoading(false,{force:true});
   el.tipPill.hidden=true;
   el.monthsWrap.hidden=true;
-
-  if(defaultWorkbookTimer){
-    clearTimeout(defaultWorkbookTimer);
-  }
-  defaultWorkbookTimer=setTimeout(()=>{
-    defaultWorkbookTimer=null;
-    if(!state.hasData) ensureDefaultWorkbook();
-  },1500);
-
-  attemptPreprocessedData()
-    .catch(err=>console.warn('Preprocessed data attempt failed:', err))
-    .finally(()=>{
-      if(defaultWorkbookTimer){
-        clearTimeout(defaultWorkbookTimer);
-        defaultWorkbookTimer=null;
-      }
-      if(!state.hasData) ensureDefaultWorkbook();
-    });
+  const scheduleDatasetPrompt=()=>promptInitialDatasetSelection();
+  if(typeof requestAnimationFrame==='function') requestAnimationFrame(scheduleDatasetPrompt);
+  else setTimeout(scheduleDatasetPrompt,0);
 }
 function showLoading(on, options={}){
   const force=!!options.force;
@@ -2997,6 +3580,7 @@ function setHasData(has){
       else redraw();
     }
   }else{
+    datasetPromptShown=false;
     filterBackfillToken+=1;
     if(el.topLine) el.topLine.style.display='none';
     if(el.kpis) el.kpis.hidden=true;
@@ -3038,18 +3622,118 @@ function setHasData(has){
     resetKpis();
     hideCustomRangePanel();
     syncCustomRangeInputs();
+    setActiveDataset(null);
+    closeDatasetMenu(false);
+    promptInitialDatasetSelection();
   }
+  updateTabButtonsForOrder(TAB_ORDER);
   updateMonthSummary();
   updateTabsUI();
   updateResetButtonVisibility();
+  updateDatasetMeta();
 }
 
-/* ===== Excel parsing (headers row 2, data from row 3) ===== */
+/* ===== Excel parsing (headers row auto-detected) ===== */
 function findIndexByTokens(headers, tokens){
   const HX=headers.map(h=>String(h||'').toLowerCase().replace(/[^a-z0-9]+/g,''));
-  for(const t of tokens){ const i=HX.indexOf(t); if(i>-1) return i; }
-  for(let i=0;i<HX.length;i++){ const h=HX[i]; if(tokens.some(t=>h.includes(t))) return i; }
-  return -1;
+  const searchTokens=(Array.isArray(tokens)?tokens:[])
+    .map(t=>String(t||'').toLowerCase().replace(/[^a-z0-9]+/g,''))
+    .filter(Boolean);
+  if(!searchTokens.length) return -1;
+  for(const token of searchTokens){
+    const idx=HX.indexOf(token);
+    if(idx>-1) return idx;
+  }
+  let bestIndex=-1;
+  let bestScore=0;
+  for(let i=0;i<HX.length;i++){
+    const header=HX[i];
+    if(!header) continue;
+    for(const token of searchTokens){
+      const pos=header.indexOf(token);
+      if(pos===-1) continue;
+      let score=token.length/Math.max(header.length,1);
+      if(pos===0) score+=0.15;
+      if(pos+token.length===header.length) score+=0.35;
+      if(score>bestScore){
+        bestScore=score;
+        bestIndex=i;
+      }
+    }
+  }
+  return bestScore>0?bestIndex:-1;
+}
+const HEADER_ROW_SCORE_GROUPS=(
+  [
+    ['store','lo','market','site','locale','country','account'],
+    ['sales','revenue','totalsales','orderedrevenue','attributedsales'],
+    ['spend','adspend','cost','advertisingcost'],
+    ['clicks'],
+    ['impressions','impr'],
+    ['customersearchterm','searchterm','term'],
+    ['campaignname','campaign'],
+    ['adgroupname','adgroup'],
+    ['portfolioname','portfolio'],
+    ['placement'],
+    ['targetingtype','adtype','type'],
+    ['targetingsubtype','matchtype','subtype']
+  ]
+).map(group=>group.map(token=>token.toLowerCase().replace(/[^a-z0-9]+/g,'')));
+function scoreHeaderRow(headers){
+  if(!Array.isArray(headers) || !headers.length) return 0;
+  let score=0;
+  for(const tokens of HEADER_ROW_SCORE_GROUPS){
+    if(findIndexByTokens(headers,tokens)>-1){
+      score+=1;
+    }
+  }
+  return score;
+}
+function detectHeaderRowIndex(sheetData){
+  if(!Array.isArray(sheetData) || !sheetData.length) return 1;
+  const limit=Math.min(sheetData.length,50);
+  let bestIndex=-1;
+  let bestScore=-1;
+  let bestTextCount=-1;
+  let bestDistinctCount=-1;
+  for(let idx=0; idx<limit; idx++){
+    const row=Array.isArray(sheetData[idx])?sheetData[idx]:[];
+    if(!row || !row.length) continue;
+    const headers=row.map(value=>{
+      if(value==null) return '';
+      const text=typeof value==='string'?value:String(value);
+      return text.trim();
+    });
+    const textCount=headers.filter(Boolean).length;
+    if(!textCount) continue;
+    const distinctCount=new Set(headers.filter(Boolean).map(h=>h.toLowerCase())).size;
+    if(distinctCount<3) continue;
+    const score=scoreHeaderRow(headers);
+    if(
+      score>bestScore ||
+      (score===bestScore && distinctCount>bestDistinctCount) ||
+      (score===bestScore && distinctCount===bestDistinctCount && textCount>bestTextCount)
+    ){
+      bestScore=score;
+      bestIndex=idx;
+      bestTextCount=textCount;
+      bestDistinctCount=distinctCount;
+    }
+  }
+  if(bestIndex>-1) return bestIndex;
+  for(let idx=0; idx<limit; idx++){
+    const row=sheetData[idx];
+    if(!Array.isArray(row)) continue;
+    const headers=row.map(value=>{
+      if(value==null) return '';
+      return String(value).trim();
+    }).filter(Boolean);
+    const distinctCount=new Set(headers.map(h=>h.toLowerCase())).size;
+    if(distinctCount>=3){
+      return idx;
+    }
+  }
+  return 1;
 }
 async function handleLocalFile(e){
   const f = e.target.files && e.target.files[0];
@@ -3057,7 +3741,13 @@ async function handleLocalFile(e){
   try{
     showLoading(true);
     const buf = await f.arrayBuffer();
-    await loadWorkbookBuffer(buf);
+    await loadWorkbookBuffer(buf,{
+      dataset:{
+        type:'local',
+        file:f.name||'local-file',
+        label:f.name||'Local file'
+      }
+    });
   }catch(err){
     console.error(err);
     alert('Failed to parse Excel: '+(err?.message||err));
@@ -3067,96 +3757,84 @@ async function handleLocalFile(e){
     e.target.value='';
   }
 }
-async function loadWorkbookBuffer(buf){
+async function loadWorkbookBuffer(buf, options={}){
   await parseExcel(buf);
+  if(options?.dataset){
+    setActiveDataset(options.dataset);
+  }else if(options){
+    const datasetInfo={
+      type:options.type||'',
+      file:options.file||'',
+      label:options.label||''
+    };
+    if(datasetInfo.type || datasetInfo.file || datasetInfo.label){
+      setActiveDataset(datasetInfo);
+    }
+  }
   setHasData(true);
-}
-async function attemptPreprocessedData(){
-  const list=Array.isArray(DEFAULT_PREPROCESSED_DATA)?DEFAULT_PREPROCESSED_DATA:[DEFAULT_PREPROCESSED_DATA];
-  const files=list.map(file=>typeof file==='string'?file.trim():'').filter(Boolean);
-  if(!files.length || state.hasData) return;
-  showLoading(true);
-  try{
-    for(const file of files){
-      if(state.hasData) return;
-      let targetUrl;
-      try{
-        targetUrl=new URL(file, document.baseURI).href;
-      }catch(_){
-        targetUrl=encodeURI(file);
-      }
-      try{
-        const response=await fetch(targetUrl,{cache:'no-store'});
-        if(!response.ok && response.status!==0){
-          console.warn(`Preprocessed data not available: ${file}`);
-          continue;
-        }
-        const payload=await response.json();
-        const sheetData=Array.isArray(payload?.sheet_data)?payload.sheet_data:null;
-        if(!sheetData || !sheetData.length){
-          console.warn(`Preprocessed data missing sheet_data in ${file}`);
-          continue;
-        }
-        const headerRowIndex=Number.isInteger(payload?.header_row_index)?payload.header_row_index:1;
-        await buildStateFromSheetData(sheetData,{headerRowIndex});
-        setHasData(true);
-        return;
-      }catch(err){
-        console.warn(`Failed to load preprocessed data from ${file}:`, err);
-      }
-    }
-  }finally{
-    showLoading(false);
-  }
+  applyDefaultFiltersForDataset(options?.dataset||null);
 }
 
-async function attemptDefaultWorkbook(){
-  const list=Array.isArray(DEFAULT_WORKBOOKS)?DEFAULT_WORKBOOKS:[DEFAULT_WORKBOOKS];
-  const files=list.map(file=>typeof file==='string'?file.trim():'').filter(Boolean);
-  if(!files.length || state.hasData) return;
-  showLoading(true);
+async function fetchArrayBufferFromUrl(file){
+  let targetUrl;
   try{
-    for(const file of files){
-      if(state.hasData) return;
-      let targetUrl;
-      try{
-        targetUrl=new URL(file, document.baseURI).href;
-      }catch(_){
-        targetUrl=encodeURI(file);
-      }
-      try{
-        const response=await fetch(targetUrl,{cache:'no-store'});
-        if(!response.ok && response.status!==0){
-          console.warn(`Default workbook not available: ${file}`);
-          continue;
-        }
-        if(state.hasData) return;
-        const buf=await response.arrayBuffer();
-        if(state.hasData) return;
-        await loadWorkbookBuffer(buf);
-        if(state.hasData) return;
-        return;
-      }catch(err){
-        console.warn(`Default workbook could not be loaded from ${file}:`, err);
-      }
-    }
-    if(!state.hasData) setHasData(false);
-  }finally{
-    showLoading(false);
+    targetUrl=new URL(file, document.baseURI).href;
+  }catch(_){
+    targetUrl=encodeURI(file);
   }
+  const response=await fetch(targetUrl,{cache:'no-store'});
+  if(!response.ok && response.status!==0){
+    const status=response.status||'';
+    const statusText=response.statusText||'';
+    const detail=[status?`HTTP ${status}`:'',statusText].filter(Boolean).join(' ').trim();
+    throw new Error(detail||'Unable to fetch dataset');
+  }
+  return response.arrayBuffer();
 }
 
-function ensureDefaultWorkbook(){
-  if(defaultWorkbookPromise){
-    return defaultWorkbookPromise;
+async function fetchJsonFromUrl(file){
+  let targetUrl;
+  try{
+    targetUrl=new URL(file, document.baseURI).href;
+  }catch(_){
+    targetUrl=encodeURI(file);
   }
-  if(defaultWorkbookTimer){
-    clearTimeout(defaultWorkbookTimer);
-    defaultWorkbookTimer=null;
+  const response=await fetch(targetUrl,{cache:'no-store'});
+  if(!response.ok && response.status!==0){
+    const status=response.status||'';
+    const statusText=response.statusText||'';
+    const detail=[status?`HTTP ${status}`:'',statusText].filter(Boolean).join(' ').trim();
+    throw new Error(detail||'Unable to fetch dataset');
   }
-  defaultWorkbookPromise=attemptDefaultWorkbook().finally(()=>{ defaultWorkbookPromise=null; });
-  return defaultWorkbookPromise;
+  return response.json();
 }
+
+async function loadWorkbookDatasetFromUrl(file,label){
+  const dataset={
+    type:'workbook',
+    file,
+    label:label || formatDatasetLabelFromFile(file)
+  };
+  const buf=await fetchArrayBufferFromUrl(file);
+  await loadWorkbookBuffer(buf,{dataset});
+  return dataset;
+}
+
+async function loadPreprocessedDatasetFromUrl(file,label){
+  const payload=await fetchJsonFromUrl(file);
+  const sheetData=Array.isArray(payload?.sheet_data)?payload.sheet_data:null;
+  if(!sheetData || !sheetData.length) throw new Error('Dataset is missing sheet data');
+  const headerRowIndex=Number.isInteger(payload?.header_row_index)?payload.header_row_index:1;
+  await buildStateFromSheetData(sheetData,{headerRowIndex});
+  setActiveDataset({
+    type:'preprocessed',
+    file,
+    label:label || formatDatasetLabelFromFile(file)
+  });
+  setHasData(true);
+  return state.dataset;
+}
+
 async function parseExcel(buf){
   const wb = XLSX.read(buf, { type:'array', cellDates:true, cellNF:true, cellText:false });
   let best=null,score=-1;
@@ -3192,7 +3870,8 @@ async function parseExcel(buf){
     defval:null,
     dense:true
   });
-  await buildStateFromSheetData(sheetData,{headerRowIndex:1});
+  const headerRowIndex=detectHeaderRowIndex(sheetData);
+  await buildStateFromSheetData(sheetData,{headerRowIndex});
 }
 
 async function buildStateFromSheetData(sheetData, options={}){
@@ -3220,6 +3899,7 @@ async function buildStateFromSheetData(sheetData, options={}){
     ttype:      findIndexByTokens(headers,['targetingtype','adtype','type']),
     tsub:       findIndexByTokens(headers,['targetingsubtype','matchtype','subtype']),
     tsub2:      findIndexByTokens(headers,['subtype2','matchtype2']),
+    targeting:  findIndexByTokens(headers,['targeting']),
     term:       findIndexByTokens(headers,['customersearchterm','searchterm','term']),
     customerType:findIndexByTokens(headers,['customersearchtermtype','searchtermtype']),
     targetingAsin:findIndexByTokens(headers,['targetingasin','targetasin','advertisedasin','asin']),
@@ -3274,8 +3954,23 @@ async function buildStateFromSheetData(sheetData, options={}){
           const parsed=XLSX?.SSF?.parse_date_code ? XLSX.SSF.parse_date_code(rawValue) : null;
           dateVal=(parsed&&parsed.y)?new Date(parsed.y,parsed.m-1,parsed.d):null;
         }else if(typeof rawValue==='string' && rawValue){
-          const parsed=parseInputDate(rawValue) || (isNaN(+new Date(rawValue))?null:new Date(rawValue));
-          dateVal=parsed instanceof Date?parsed:null;
+          const trimmed=rawValue.trim();
+          if(trimmed){
+            const numericText=trimmed.replace(/,/g,'');
+            if(/^[-+]?\d+(?:\.\d+)?$/.test(numericText)){
+              const asNumber=Number(numericText);
+              if(Number.isFinite(asNumber)){
+                const parsed=XLSX?.SSF?.parse_date_code ? XLSX.SSF.parse_date_code(asNumber) : null;
+                if(parsed && parsed.y){
+                  dateVal=new Date(parsed.y,parsed.m-1,parsed.d);
+                }
+              }
+            }
+            if(!dateVal){
+              const parsed=parseInputDate(trimmed) || (isNaN(+new Date(trimmed))?null:new Date(trimmed));
+              dateVal=parsed instanceof Date?parsed:null;
+            }
+          }
         }
         v=dateVal instanceof Date?toInputDate(dateVal):null;
       }else if(numericIdx.has(i)){
@@ -3327,11 +4022,44 @@ async function buildStateFromSheetData(sheetData, options={}){
   }
 }
 
+function applyDefaultFiltersForDataset(datasetInfo){
+  if(!state.hasData) return false;
+  const info=datasetInfo || state.dataset || {};
+  const file=(info.file||'').toLowerCase();
+  const label=(info.label||'').toLowerCase();
+  const customerTypeLabel=(state.columns?.customerType?.name||'').toLowerCase();
+  const termLabel=(state.columns?.term?.name||'').toLowerCase();
+  const looksLikeSearchTerms =
+    file.includes('search term') ||
+    label.includes('search term') ||
+    (customerTypeLabel.includes('customer search term') && termLabel.includes('search term'));
+  if(!looksLikeSearchTerms) return false;
+
+  const applySelection=(key, values)=>{
+    const root=el.dd?.[key];
+    const col=state.columns?.[key];
+    if(!root || !col || col.aliasOf) return false;
+    return setFilterSelections(root, values, true);
+  };
+
+  let changed=false;
+  if(applySelection('customerType',['ST'])) changed=true;
+  if(applySelection('tsub',['Keyword'])) changed=true;
+
+  if(changed){
+    updateAllFilterOptions(null);
+    resetConversionPaging();
+    renderAll();
+    updateResetButtonVisibility();
+  }
+  return changed;
+}
+
 function buildSqlIndexes(){
   const db=getSqlDb();
   if(!db || !state.sql?.table) return;
   const table=state.sql.table;
-  const keys=['date','store','lo','category','campaign','adgroup','portfolio','term','customerType','ttype','tsub','tsub2','placement','targetingAsin','targetingCat'];
+  const keys=['date','store','lo','category','campaign','adgroup','portfolio','term','customerType','ttype','tsub','tsub2','placement','targeting','targetingAsin','targetingCat'];
   keys.forEach(key=>{
     const info=getSqlInfoForStateKey(key);
     if(!info) return;
@@ -3401,6 +4129,7 @@ function buildMonths(){
   updateMonthTabs();
   updateMonthSummary();
   el.monthsWrap.hidden=state.monthOptions.length===0 && !state.customRange.active;
+  updateDatasetMeta();
 }
 function updateMonthSummary(){
   const sumEl=el.monthDD.querySelector('.dd-summary');
@@ -3608,8 +4337,11 @@ function ddSetOptions(root, items, keepSel=true){
         }else{
           ddApplyImmediateFilters(root);
         }
-      }else if(filterKey==='targetingAsin'){
-        onAsinFilterSelectionChange();
+      }else{
+        if(filterKey==='targetingAsin'){
+          onAsinFilterSelectionChange();
+        }
+        refreshLinkedFilterOptions(root);
       }
       const panel=root.querySelector('.dd-panel');
       if(panel){
@@ -3626,11 +4358,13 @@ function ddSetOptions(root, items, keepSel=true){
       ddRefreshSearchSelections(root);
       if(filterKey==='sku'){
         onSkuFilterSelectionChange(true);
+      }else if(root.classList.contains('dd-search-mode')){
+        ddApplyImmediateFilters(root);
       }else{
         if(filterKey==='targetingAsin'){
           onAsinFilterSelectionChange();
         }
-        ddApplyImmediateFilters(root);
+        refreshLinkedFilterOptions(root);
       }
     });
   });
@@ -3649,6 +4383,19 @@ function computeSearchPlaceholder(labelText, fallback){
     return secondary.toLowerCase().includes('search') ? secondary : `Search ${secondary}`;
   }
   return 'Search';
+}
+function refreshLinkedFilterOptions(root){
+  if(!root || root.classList.contains('dd-search-mode')) return;
+  if(!state.hasData) return;
+  updateAllFilterOptions(root);
+  if(state.activePivotModal) return;
+  const isMainFilter = !!root.closest?.('#filtersSection');
+  if(isMainFilter){
+    return;
+  }
+  resetConversionPaging();
+  renderAll();
+  updateResetButtonVisibility();
 }
 function ddApplyImmediateFilters(root){
   if(!root?.classList?.contains('dd-search-mode')) return;
@@ -4044,19 +4791,21 @@ function buildFilterContext(excludeRoot){
   return {conditions, meta:{dateInfo, from, to, monthSet}};
 }
 function updateAllFilterOptions(excludeRoot, options={}){
-  const context=buildFilterContext(excludeRoot||null);
   const keysOption=Array.isArray(options.keys)?options.keys.filter(Boolean):null;
   const targetKeys=keysOption && keysOption.length ? new Set(keysOption) : null;
+  const fullContext=buildFilterContext(null);
+  const excludedContext=excludeRoot ? buildFilterContext(excludeRoot) : fullContext;
   Object.entries(el.dd).forEach(([k,root])=>{
     if(!root) return;
     if(targetKeys && !targetKeys.has(k)) return;
+    const contextForRoot = (excludeRoot && root===excludeRoot) ? excludedContext : fullContext;
     if(k==='sku'){
-      ddSetOptions(root, skuOptionsWithCounts(context), true);
+      ddSetOptions(root, skuOptionsWithCounts(contextForRoot), true);
       return;
     }
     const col=state.columns[k];
     if(!col || col.aliasOf) return;
-    ddSetOptions(root, optionsWithCounts(k, context), true);
+    ddSetOptions(root, optionsWithCounts(k, contextForRoot), true);
   });
 }
 
@@ -4320,6 +5069,27 @@ function buildAggSql(context, columnKey, spendInfo, salesInfo, options={}){
   const displayExpr=caseInsensitive?`MAX(${labelExpr})`:labelExpr;
   const extraCond={sql:`TRIM(${labelExpr}) <> ''`};
   const extras=[extraCond];
+  const baseFilters=[];
+  if(options.baseFilter) baseFilters.push(options.baseFilter);
+  if(Array.isArray(options.baseFilters)) baseFilters.push(...options.baseFilters);
+  baseFilters.forEach(filter=>{
+    if(!filter) return;
+    if(filter.sql){
+      const params=Array.isArray(filter.params)?filter.params:[];
+      extras.push({sql:String(filter.sql), params});
+      return;
+    }
+    const values=Array.isArray(filter.values)?filter.values.filter(v=>String(v??'').trim()!=='')
+      : (filter.value!=null?[filter.value]:[]);
+    if(!values.length) return;
+    const stateKey=filter.stateKey || filter.columnKey || '';
+    const columnKey=filter.columnKey ? normalize(filter.columnKey) : '';
+    let info=null;
+    if(columnKey) info=getSqlColumn(columnKey);
+    if(!info && stateKey) info=getSqlInfoForStateKey(stateKey);
+    const cond=buildSqlInCondition(info, values);
+    if(cond) extras.push(cond);
+  });
   const pivotFilter=options?.pivotFilter;
   if(pivotFilter) appendDateFilterExtras(extras, pivotFilter);
   const {sql,params}=combineWhere(context.conditions, extras);
@@ -4445,10 +5215,12 @@ function renderPivotTable(table){
   }
 
   const showSkuColumn=!!data.showSkuColumn;
-  const head=buildPivotHead(safeColumn, sort.key, sort.dir, showSkuColumn);
+  const showBrandColumn=!!data.showBrandColumn;
+  const head=buildPivotHead(safeColumn, sort.key, sort.dir, showSkuColumn, showBrandColumn);
+  const columnCount=5 + (showSkuColumn?1:0) + (showBrandColumn?1:0);
 
   if(!baseRows.length){
-    const colspan=showSkuColumn?6:5;
+    const colspan=columnCount;
     table.innerHTML = head + `<tbody><tr><td colspan="${colspan}" class="pivot-empty">No ${safeColumn} data for current filters.</td></tr></tbody>`;
     table.classList.remove('has-grand-total');
     updatePivotFootSpace(table);
@@ -4465,7 +5237,7 @@ function renderPivotTable(table){
   const visibleRows=baseRows.slice(pageStart, Math.min(baseRows.length, pageStart+pageCount));
 
   if(!visibleRows.length){
-    const colspan=showSkuColumn?6:5;
+    const colspan=columnCount;
     table.innerHTML = head + `<tbody><tr><td colspan="${colspan}" class="pivot-empty">No ${safeColumn} rows on this page.</td></tr></tbody>`;
     table.classList.remove('has-grand-total');
     updatePivotFootSpace(table);
@@ -4480,17 +5252,19 @@ function renderPivotTable(table){
   const bodyRows=visibleRows.map(row=>{
     const labelCell=buildPivotLabelCell(row, dimension, data);
     const skuCell=showSkuColumn?buildPivotSkuCell(row):'';
+    const brandCell=showBrandColumn?buildPivotBrandCell(row):'';
     const spendCell=buildPivotMoneyCell(row.spend);
     const salesCell=buildPivotMoneyCell(row.sales);
     const acosCells=buildPivotAcosCells(row.acos, barScale, false);
-    return `<tr>${labelCell}${skuCell}${spendCell}${salesCell}${acosCells}</tr>`;
+    return `<tr>${labelCell}${skuCell}${brandCell}${spendCell}${salesCell}${acosCells}</tr>`;
   }).join('');
 
   const totalSpend=Number(data.totals?.spend)||0;
   const totalSales=Number(data.totals?.sales)||0;
   const totalAcos=typeof data.totals?.acos==='number'?data.totals.acos:NaN;
   const totalSkuCell=showSkuColumn?'<td class="pivot-sku"></td>':'';
-  const totalRow=`<tr class="pivot-total"><th scope="row">Grand Total</th>${totalSkuCell}${buildPivotMoneyCell(totalSpend)}${buildPivotMoneyCell(totalSales)}${buildPivotAcosCells(totalAcos, barScale, true)}</tr>`;
+  const totalBrandCell=showBrandColumn?'<td class="pivot-brand"></td>':'';
+  const totalRow=`<tr class="pivot-total"><th scope="row">Grand Total</th>${totalSkuCell}${totalBrandCell}${buildPivotMoneyCell(totalSpend)}${buildPivotMoneyCell(totalSales)}${buildPivotAcosCells(totalAcos, barScale, true)}</tr>`;
 
   table.innerHTML = head + `<tbody>${bodyRows}</tbody><tfoot>${totalRow}</tfoot>`;
   table.classList.add('has-grand-total');
@@ -4498,12 +5272,15 @@ function renderPivotTable(table){
   schedulePivotLayout();
 }
 
-function buildPivotHead(columnLabel, activeKey, activeDir, showSkuColumn){
+function buildPivotHead(columnLabel, activeKey, activeDir, showSkuColumn, showBrandColumn){
   const cells=[
     buildPivotHeadCell('label', columnLabel, '', activeKey, activeDir)
   ];
   if(showSkuColumn){
     cells.push(buildPivotHeadCell('sku', 'SKU', 'pivot-sku', activeKey, activeDir));
+  }
+  if(showBrandColumn){
+    cells.push(buildPivotHeadCell('brand', 'Brand', 'pivot-brand', activeKey, activeDir));
   }
   cells.push(
     buildPivotHeadCell('spend', 'Spend', '', activeKey, activeDir),
@@ -4587,6 +5364,26 @@ function buildPivotSkuCell(row){
   return '<td class="pivot-sku">—</td>';
 }
 
+function buildPivotBrandCell(row){
+  let text='';
+  if(row && typeof row==='object'){
+    if(Object.prototype.hasOwnProperty.call(row,'brandText')){
+      const stored=row.brandText;
+      text=stored==null?'':String(stored).trim();
+    }
+    if(!text){
+      const rawValue=Object.prototype.hasOwnProperty.call(row,'rawValue') ? row.rawValue : row?.label;
+      const lookup=lookupAsinBrand(rawValue);
+      text=lookup?String(lookup).trim():'';
+      row.brandText=text;
+    }
+  }
+  if(text){
+    return `<td class="pivot-brand"><span class="pivot-label-text">${escapeHtml(text)}</span></td>`;
+  }
+  return '<td class="pivot-brand">—</td>';
+}
+
 function buildPivotAcosCells(value, barScale, isTotal){
   if(!Number.isFinite(value)){
     return '<td class="pivot-acos pivot-acos-empty">—</td><td class="pivot-acos-bar pivot-acos-empty"></td>';
@@ -4612,6 +5409,18 @@ function comparePivotRows(a,b,key,dir){
   if(key==='sku'){
     const aVal=String(a?.skuSortKey ?? a?.skuText ?? '').trim();
     const bVal=String(b?.skuSortKey ?? b?.skuText ?? '').trim();
+    const aEmpty=!aVal;
+    const bEmpty=!bVal;
+    if(aEmpty!==bEmpty){
+      return aEmpty ? 1 : -1;
+    }
+    const cmp=PIVOT_LABEL_COLLATOR.compare(aVal, bVal);
+    if(cmp!==0) return dir==='desc' ? -cmp : cmp;
+    return PIVOT_LABEL_COLLATOR.compare(String(a.label??''), String(b.label??''));
+  }
+  if(key==='brand'){
+    const aVal=String(a?.brandSortKey ?? a?.brandText ?? '').trim();
+    const bVal=String(b?.brandSortKey ?? b?.brandText ?? '').trim();
     const aEmpty=!aVal;
     const bEmpty=!bVal;
     if(aEmpty!==bEmpty){
@@ -4713,6 +5522,20 @@ function renderPivotCard(target, columnLabel, agg, hasColumn){
   const spendVals = Array.isArray(agg?.spend) ? agg.spend.map(v=>+v||0) : labels.map(()=>0);
   const salesVals = Array.isArray(agg?.sales) ? agg.sales.map(v=>+v||0) : labels.map(()=>0);
 
+  if(!labels.length){
+    target.card.hidden = true;
+    if(target.card?.style) target.card.style.removeProperty('grid-row-end');
+    if(target.table){
+      target.table.innerHTML='';
+      target.table._pivotData=null;
+      target.table.classList.remove('has-grand-total');
+      updatePivotFootSpace(target.table);
+    }
+    setPivotNote(target.card, '');
+    schedulePivotLayout();
+    return false;
+  }
+
   const parseAcosValue=(value)=>{
     if(typeof value==='number') return value;
     const str=String(value??'').trim();
@@ -4784,18 +5607,22 @@ function renderPivotCard(target, columnLabel, agg, hasColumn){
 
   const slot=target.table?._pivotSlot || target.card?.dataset.pivotSlot || '';
   const showSkuColumn=slot==='targetingAsin';
-  if(showSkuColumn && !state.asinSkuLoaded){
+  const showBrandColumn=slot==='conversionAsin' || slot==='targetingAsin';
+  if((showSkuColumn || showBrandColumn) && !state.asinSkuLoaded){
     ensureAsinSkuMap();
   }
-  if(showSkuColumn){
-    const asinValueMap = state.asinValueMap instanceof Map ? state.asinValueMap : (state.asinValueMap=new Map());
+  let asinValueMap=null;
+  if(showSkuColumn || showBrandColumn){
+    asinValueMap = state.asinValueMap instanceof Map ? state.asinValueMap : (state.asinValueMap=new Map());
     asinValueMap.clear();
+  }
+  if(showSkuColumn){
     const annotateSku=row=>{
       if(!row || typeof row!=='object') return;
       const rawValue=Object.prototype.hasOwnProperty.call(row,'rawValue') ? row.rawValue : row?.label;
       const asinValue=rawValue==null?'':String(rawValue);
       const asinKey=normalizeAsinKey(asinValue);
-      if(asinKey) asinValueMap.set(asinKey, asinValue);
+      if(asinKey && asinValueMap) asinValueMap.set(asinKey, asinValue);
       let text=typeof row.skuText==='string'?row.skuText.trim():'';
       let list=Array.isArray(row.skuList)?row.skuList.filter(v=>v!=null && v!=='').map(v=>String(v)) : [];
       if(!text || !list.length){
@@ -4811,6 +5638,30 @@ function renderPivotCard(target, columnLabel, agg, hasColumn){
     rowData.forEach(annotateSku);
     if(Array.isArray(allRows)){
       allRows.forEach(annotateSku);
+    }
+  }
+  if(showBrandColumn){
+    const annotateBrand=row=>{
+      if(!row || typeof row!=='object') return;
+      const rawValue=Object.prototype.hasOwnProperty.call(row,'rawValue') ? row.rawValue : row?.label;
+      const asinValue=rawValue==null?'':String(rawValue);
+      const asinKey=normalizeAsinKey(asinValue);
+      if(asinKey && asinValueMap && !asinValueMap.has(asinKey)){
+        asinValueMap.set(asinKey, asinValue);
+      }
+      let text=typeof row.brandText==='string'?row.brandText.trim():'';
+      if(!text){
+        const lookup=lookupAsinBrand(rawValue);
+        text=lookup?String(lookup).trim():'';
+        row.brandText=text;
+      }else{
+        row.brandText=text;
+      }
+      row.brandSortKey=text?text.toLowerCase():'';
+    };
+    rowData.forEach(annotateBrand);
+    if(Array.isArray(allRows)){
+      allRows.forEach(annotateBrand);
     }
   }
   if(slot) prunePivotFilter(slot, target.dimension, allRows);
@@ -4831,7 +5682,8 @@ function renderPivotCard(target, columnLabel, agg, hasColumn){
     page:pageMeta,
     limit,
     totalCount,
-    showSkuColumn
+    showSkuColumn,
+    showBrandColumn
   };
 
   if(!target.table._pivotSort){
@@ -5059,7 +5911,10 @@ function updateAdvertisedProductsDisplay(){
     tracker.renderToken=(tracker.renderToken||0)+1;
   }
   const token=tracker?.renderToken||0;
-  if(!state.hasData || state.activeTab!=='campaignPortfolio'){
+  const activeConfig=Array.isArray(PIVOT_CONFIG[state.activeTab])?PIVOT_CONFIG[state.activeTab]:[];
+  const supportsCampaign=activeConfig.some(cfg=>cfg?.slot==='campaign');
+  const supportsAdGroup=activeConfig.some(cfg=>cfg?.slot==='adGroup');
+  if(!state.hasData || (!supportsCampaign && !supportsAdGroup)){
     view.card.hidden=true;
     return;
   }
@@ -5247,10 +6102,18 @@ function openFiltersModal(options={}){
   el.modal.setAttribute('aria-hidden','false');
 }
 function closeFiltersCancel(){
+  const pivotContext=state.activePivotModal;
   state.activePivotModal=null;
   restoreSnapshot();
   el.modal.classList.remove('open');
   el.modal.setAttribute('aria-hidden','true');
+  if(pivotContext){
+    updatePivotFilterButtons();
+    refreshActivePivotPopup();
+  }else{
+    resetConversionPaging();
+    renderAll();
+  }
   restoreFiltersTriggerFocus();
 }
 function closeFiltersApply(){
@@ -5275,6 +6138,7 @@ function closeFiltersApply(){
   el.modal.setAttribute('aria-hidden','true');
   resetConversionPaging();
   renderAll();
+  updateResetButtonVisibility();
   restoreFiltersTriggerFocus();
 }
 function clearAllFilters(){
