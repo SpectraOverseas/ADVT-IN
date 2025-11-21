@@ -2382,6 +2382,7 @@ function applyDatasetOverrides(dataset){
     ensureSlot('campaign','campaign','Campaign Name');
     ensureSlot('adGroup','adgroup','Ad Group Name');
   }
+  PIVOT_CONFIG=normalizePivotConfig(PIVOT_CONFIG);
   updateTabButtonsForOrder(TAB_ORDER);
   if(!TAB_ORDER.includes(state.activeTab)){
     state.activeTab=TAB_ORDER[0] || 'overview';
@@ -2656,6 +2657,15 @@ const DEFAULT_PIVOT_CONFIG={
   ]
 };
 let PIVOT_CONFIG=clonePivotConfig(DEFAULT_PIVOT_CONFIG);
+
+function normalizePivotConfig(map){
+  const result={};
+  Object.entries(map||{}).forEach(([tab, config])=>{
+    result[tab]=dedupePivotConfig(config).map(item=>({...item}));
+  });
+  return result;
+}
+PIVOT_CONFIG=normalizePivotConfig(PIVOT_CONFIG);
 const INITIAL_FILTER_KEYS=(()=>{
   const keys=new Set(['term']);
   (DEFAULT_PIVOT_CONFIG.overview||[]).forEach(cfg=>{
