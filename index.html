@@ -703,8 +703,8 @@ body.has-data #tipPill{display:none !important}
   </div>
   <div class="chart-card pivot-card pivot-targeting-left" id="pivotTargetingKeywordCard">
     <div class="chart-title">
-      <span class="chart-title-text">Keywords Performance Pivot</span>
-      <button type="button" class="pivot-action-btn pivot-copy-btn" data-copy-target="pivotTableTargetingKeyword" title="Copy Keywords Performance Pivot table" aria-label="Copy Keywords Performance Pivot table">
+      <span class="chart-title-text">Keyword Performance Pivot</span>
+      <button type="button" class="pivot-action-btn pivot-copy-btn" data-copy-target="pivotTableTargetingKeyword" title="Copy Keyword Performance Pivot table" aria-label="Copy Keyword Performance Pivot table">
         <span class="pivot-copy-icon" aria-hidden="true">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
             <rect x="5" y="5" width="12" height="12" rx="3" ry="3" opacity=".45"></rect>
@@ -2699,6 +2699,12 @@ function formatDatasetLabelFromFile(file){
 
 function createDatasetId(type,file){
   return `${type||''}:${(file||'').toLowerCase()}`;
+}
+
+function isSearchTermDataset(dataset){
+  const file=(dataset?.file||'').toLowerCase();
+  const label=(dataset?.label||'').toLowerCase();
+  return file.includes('search term') || label.includes('search term');
 }
 
 function getBuiltinDatasetOptions(){
@@ -6046,7 +6052,10 @@ function renderAll(){
     if(!target) return false;
     if(target.table) target.table._pivotSlot=slot;
     const columnDef=state.columns[column];
-    const columnName=columnDef?.name || fallback;
+    let columnName=columnDef?.name || fallback;
+    if(slot==='targetingKeyword' && isSearchTermDataset(state.dataset)){
+      columnName='Keyword';
+    }
     const columnKey=columnDef ? normalize(columnDef.name) : null;
     const opts=options||{};
     target.dimension = columnKey ? {stateKey:column, columnKey, caseInsensitive:!!opts.caseInsensitive} : null;
