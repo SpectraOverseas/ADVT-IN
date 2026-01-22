@@ -39,28 +39,6 @@ body{margin:0;font:13.5px/1.45 system-ui,-apple-system,Segoe UI,Roboto,"Helvetic
 h1{margin:0;font-weight:800;letter-spacing:.2px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-/* Auth */
-body.auth-loading #appHeader,
-body.auth-loading #contentWrap{display:none}
-body.auth-loading #loginScreen{display:none}
-body.auth-required #appHeader,
-body.auth-required #contentWrap{display:none}
-body.auth-required #loginScreen{display:flex}
-body.is-authenticated #loginScreen{display:none}
-.login-screen{position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;background:radial-gradient(700px 380px at 20% -10%, color-mix(in srgb, #ffffff 6%, var(--bg)) 0%, var(--bg) 40%);padding:24px}
-.login-card{width:min(420px,92vw);background:var(--panel);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:24px;display:flex;flex-direction:column;gap:18px}
-.login-header{display:flex;flex-direction:column;gap:6px}
-.login-title{font-size:20px;font-weight:800}
-.login-subtitle{color:var(--muted);font-size:13px}
-.login-form{display:flex;flex-direction:column;gap:14px}
-.login-field{display:flex;flex-direction:column;gap:6px}
-.login-field label{font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);font-weight:700}
-.login-field input{border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:var(--panel);color:var(--text);font-size:14px}
-.login-field input:focus{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--accent)}
-.login-actions{display:flex;flex-direction:column;gap:10px}
-.login-error{min-height:18px;color:var(--danger);font-weight:600;font-size:12px}
-.login-meta{color:var(--muted);font-size:12px;text-align:center}
-
 /* Buttons */
 button{border:1px solid var(--border);background:var(--panel);color:var(--text);padding:10px 12px;border-radius:12px;cursor:pointer;transition:transform .12s, box-shadow .25s, background .2s, border-color .2s}
 button:hover{transform:translateY(-1px)}
@@ -434,31 +412,7 @@ body.has-data #tipPill{display:none !important}
 @media (max-width:620px){.kpis{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
-<body class="auth-loading">
-
-<div id="loginScreen" class="login-screen" role="dialog" aria-modal="true" aria-label="Login" hidden>
-  <div class="login-card">
-    <div class="login-header">
-      <div class="login-title">Welcome back</div>
-      <div class="login-subtitle">Sign in to access your GitHub dashboard.</div>
-    </div>
-    <form id="loginForm" class="login-form" novalidate>
-      <div class="login-field">
-        <label for="loginEmail">Email</label>
-        <input id="loginEmail" name="email" type="email" autocomplete="username" required placeholder="you@example.com" />
-      </div>
-      <div class="login-field">
-        <label for="loginPassword">Password</label>
-        <input id="loginPassword" name="password" type="password" autocomplete="current-password" required placeholder="Enter your password" />
-      </div>
-      <div class="login-error" id="loginError" role="alert" aria-live="polite"></div>
-      <div class="login-actions">
-        <button id="loginSubmit" type="submit" class="btn-primary">Login</button>
-      </div>
-    </form>
-    <div class="login-meta">Protected access enabled.</div>
-  </div>
-</div>
+<body>
 
 <header id="appHeader" class="app-header">
   <div class="header-left">
@@ -495,7 +449,6 @@ body.has-data #tipPill{display:none !important}
     <input id="fileInput" type="file" accept=".xlsx,.xls" hidden />
     <button id="downloadCsvBtn" class="btn-primary btn-success" disabled>Download CSV</button>
     <button id="themeBtn" class="btn-mode" title="Toggle dark/light" aria-label="Toggle theme"><span class="icon">🌙</span></button>
-    <button id="logoutBtn" class="btn-outline" hidden>Logout</button>
   </div>
 </header>
 
@@ -2224,13 +2177,6 @@ function handleCustomRangeCancel(){
 
 /* ===== elements/state ===== */
 const el={
-  loginScreen:document.getElementById('loginScreen'),
-  loginForm:document.getElementById('loginForm'),
-  loginEmail:document.getElementById('loginEmail'),
-  loginPassword:document.getElementById('loginPassword'),
-  loginError:document.getElementById('loginError'),
-  loginSubmit:document.getElementById('loginSubmit'),
-  logoutBtn:document.getElementById('logoutBtn'),
   datasetTitle:document.getElementById('datasetTitle'),
   header:document.getElementById('appHeader'),
   topLine:document.getElementById('topLine'),
@@ -2353,111 +2299,6 @@ const el={
     term:document.getElementById('termMS')
   }
 };
-
-/* ===== auth ===== */
-const AUTH_STORAGE_KEY='dashboardAuth';
-const USERS_JSON_PATH='users.json';
-let hasBooted=false;
-
-function normalizeEmail(value){
-  return String(value||'').trim().toLowerCase();
-}
-function setAuthUI(isAuthenticated){
-  document.body.classList.toggle('auth-required', !isAuthenticated);
-  document.body.classList.toggle('is-authenticated', isAuthenticated);
-  document.body.classList.remove('auth-loading');
-  if(el.loginScreen) el.loginScreen.hidden=isAuthenticated;
-  if(el.logoutBtn) el.logoutBtn.hidden=!isAuthenticated;
-}
-function setLoginError(message=''){
-  if(!el.loginError) return;
-  el.loginError.textContent=message;
-}
-async function loadAllowedUsers(){
-  const response=await fetch(USERS_JSON_PATH,{cache:'no-store'});
-  if(!response.ok) throw new Error('Unable to load users');
-  const data=await response.json();
-  return Array.isArray(data?.users)?data.users:[];
-}
-async function hashPassword(password, salt){
-  const encoder=new TextEncoder();
-  const data=encoder.encode(`${salt}${password}`);
-  const hashBuffer=await crypto.subtle.digest('SHA-256', data);
-  const hashArray=Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b=>b.toString(16).padStart(2,'0')).join('');
-}
-async function verifyCredentials(email, password){
-  const users=await loadAllowedUsers();
-  const normalized=normalizeEmail(email);
-  const user=users.find(row=>normalizeEmail(row.email)===normalized);
-  if(!user) return {ok:false};
-  const computed=await hashPassword(password, user.salt || '');
-  if(computed!==user.passwordHash) return {ok:false};
-  return {ok:true, email:user.email};
-}
-function storeSession(email){
-  sessionStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({email,ts:Date.now()}));
-}
-function clearSession(){
-  sessionStorage.removeItem(AUTH_STORAGE_KEY);
-}
-function restoreSession(){
-  const raw=sessionStorage.getItem(AUTH_STORAGE_KEY);
-  if(!raw) return null;
-  try{
-    const data=JSON.parse(raw);
-    return data?.email ? data : null;
-  }catch(_){
-    return null;
-  }
-}
-function ensureBoot(){
-  if(hasBooted) return;
-  hasBooted=true;
-  boot();
-}
-async function handleLoginSubmit(event){
-  event.preventDefault();
-  setLoginError('');
-  if(el.loginSubmit) el.loginSubmit.disabled=true;
-  try{
-    const email=el.loginEmail?.value || '';
-    const password=el.loginPassword?.value || '';
-    if(!email || !password){
-      setLoginError('Please enter your email and password.');
-      return;
-    }
-    const result=await verifyCredentials(email, password);
-    if(!result.ok){
-      setLoginError('Invalid email or password.');
-      return;
-    }
-    storeSession(result.email);
-    setAuthUI(true);
-    ensureBoot();
-  }catch(_){
-    setLoginError('Login failed. Please try again.');
-  }finally{
-    if(el.loginSubmit) el.loginSubmit.disabled=false;
-  }
-}
-function setupAuth(){
-  const existing=restoreSession();
-  if(el.loginForm) el.loginForm.addEventListener('submit', handleLoginSubmit);
-  if(el.logoutBtn){
-    el.logoutBtn.addEventListener('click', ()=>{
-      clearSession();
-      window.location.reload();
-    });
-  }
-  if(existing?.email){
-    setAuthUI(true);
-    ensureBoot();
-  }else{
-    setAuthUI(false);
-  }
-}
-
 const DEFAULT_HEADER_TITLE='Search Terms Analytics';
 const state={
   rows:[],
@@ -3388,7 +3229,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const light=document.body.classList.contains('light');
     el.themeBtn.querySelector('.icon').textContent= light?'🌙':'☀️';
   }
-  setupAuth();
+  boot();
   window.addEventListener('resize', debounce(()=>{
     schedulePivotLayout();
     if(lastKpiSeries) updateKpiSparks(lastKpiSeries);
