@@ -40,18 +40,3 @@ and partition index) plus one JSON/CSV file for each partition. The metadata is
 consumed by the front-end helper in ``tools/frontend-data-loader.js`` to fetch
 only the slices required by the active filters and to keep every pivot table in
 sync.
-
-## Secure login (Node/Express)
-
-This repository includes a simple login workflow backed by a server session and
-hashed credentials stored in `users.json`.
-
-1. Install Node dependencies:
-   ```bash
-   npm install
-   ```
-2. Start the server:
-   ```bash
-   npm start
-   ```
-3. Visit `http://localhost:3000` to sign in and access the dashboard.
