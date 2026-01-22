@@ -1,0 +1,27 @@
+[
+  {
+    "email": "uss1@simondstore.com",
+    "passwordHash": "425e5a885cc5fbfdc6c0449085ae83269e7b1b4b115d6d25c46b5ff5580924d0",
+    "salt": "1b7ca878352303844f23bd3378c31692"
+  },
+  {
+    "email": "uss12@simondstore.com",
+    "passwordHash": "aeb0cc7419c441d191afeefe97f8c62d4d0326c546fe2055ff5745b1f28e09a7",
+    "salt": "81a262f457d453281fe3a8da4e4d250c"
+  },
+  {
+    "email": "uss3@simondstore.com",
+    "passwordHash": "8d7eef9c3c81fa130beb84144f0f42a14fbb992dace28e9006d93906477dc8a2",
+    "salt": "bd7200cf4315d2dd31c24284e3620927"
+  },
+  {
+    "email": "uca6@simondstore.com",
+    "passwordHash": "b8c0f3c151b96bcc95a731bd542041774379bf580fe1a93c89047333a006ce40",
+    "salt": "424762e6e1870267d6844341d900106e"
+  },
+  {
+    "email": "uss13@simondstore.com",
+    "passwordHash": "3f38090afd68273bb90c0b5331bfbab5e78da6374b81eec14489d391a1d20402",
+    "salt": "98c6b3a1c78897660c52005fdfbd07b4"
+  }
+]
