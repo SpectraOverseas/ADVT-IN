@@ -5,7 +5,16 @@
 <title>Search Terms Analytics</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <script>
-  if (sessionStorage.getItem("authenticated") !== "true") {
+  // Force re-login on browser reload using the Performance Navigation API.
+  const navEntry = performance.getEntriesByType("navigation")[0];
+  const isReload =
+    (navEntry && navEntry.type === "reload") || performance.navigation?.type === 1;
+
+  if (isReload) {
+    sessionStorage.removeItem("authenticated");
+    window.location.replace("index.html");
+  } else if (sessionStorage.getItem("authenticated") !== "true") {
+    // Normal access without a valid session should go back to the login page.
     window.location.replace("index.html");
   }
 </script>
